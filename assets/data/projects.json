@@ -1,0 +1,188 @@
+[
+    {
+        "images": {
+            "desktop": "restcountries.png",
+            "mobile": "restcountries-mobile.PNG"
+        },
+        "name": "Countries con Rest",
+        "technologies": [
+            "html",
+            "css",
+            "javascript",
+            "apirest"
+        ],
+        "description": "Web de países creada utilizando datos de una apirest externa. Se puede cambiar de tema, filtrar por continentes y buscar los países que se requieran",
+        "list": [
+            "Paginación con Javascript",
+            "Flex para la maquetación",
+            "Fetch para cargar headers y peticiones",
+            "Uso de sessionstorage y localstorage"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/REST-Countries/",
+            "repo": "https://github.com/fruizotero/REST-Countries"
+        }
+    },
+    {
+        "images": {
+            "desktop": "space-tourism.png",
+            "mobile": "space-tourism-mobilw.PNG"
+        },
+        "name": "Turismo Espacial",
+        "technologies": [
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Web acerca del turismo espacial, se puede navegar entre distintas páginas. Se utilizó fetch para cargar las cabeceras de manera dinámica, así como los distintos contenidos como slider y tabs",
+        "list": [
+            "Fetch para cargar header en las distintas páginas",
+            "Empleo de fragmentos para añadir elementos al DOM",
+            "Empleo de callbacks como parámetros en funciones",
+            "Puesta en práctica de la metodología BEM"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/space-tourism-website/index.html",
+            "repo": "https://github.com/fruizotero/space-tourism-website"
+        }
+    },
+    {
+        "images": {
+            "desktop": "ecomerce.png",
+            "mobile": "ecomerce-mobile.PNG"
+        },
+        "name": "Producto de Ecommerce",
+        "technologies": [
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Página de un producto que sería parte de una web de Ecommerce. Consta de sliders, así como un carrito donde se puede añadir y quitar elementos, además del calculo básico de la suma total de productos añadidos",
+        "list": [
+            "Delegación de Eventos",
+            "Fetch para cargar datos desde archivo json",
+            "Uso de Templates y Fragmentos",
+            "Uso de data attributes"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/ecommerce-product/",
+            "repo": "https://github.com/fruizotero/ecommerce-product"
+        }
+    },
+    {
+        "images": {
+            "desktop": "filter.png",
+            "mobile": "filter-mobile.PNG"
+        },
+        "name": "Listado de trabajos con filtro",
+        "technologies": [
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Página con una lista de trabajos que consta con una serie de etiquetas las cuales se pueden ir seleccionando e irán agregandose al filtro para filtrar los distintos trabajos que cumplan las condiciones",
+        "list": [
+            "Delegación de eventos",
+            "Fragmentos y Templates para añadir elementos al DOM",
+            "Evento DOMCotentLoaded para la carga de elementos al inicio",
+            "Fetch para la carga de datos desde archivo json"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/Job-listings-with-filtering/",
+            "repo": "https://github.com/fruizotero/Job-listings-with-filtering"
+        }
+    },
+    {
+        "images": {
+            "desktop": "pricing.png",
+            "mobile": "pricing-mobile.PNG"
+        },
+        "name": "Componente interactivo de Precios",
+        "technologies": [
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Página que consta de un Slider el cual va variando los precios del producto según el valor de rango del Slider. Pueden variar entre precios mensuales y anuales.",
+        "list": [
+            "Delegación de eventos",
+            "Empleo de la función Animate() de javascript",
+            "Uso de animaciones y transiciones",
+            "Grid y flex para la maquetación"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/Interactive-pricing-component/",
+            "repo": "https://github.com/fruizotero/Interactive-pricing-component"
+        }
+    },
+    {
+        "images": {
+            "desktop": "calculadora.png",
+            "mobile": "calculadora-mobile.PNG"
+        },
+        "name": "Calculadora",
+        "technologies": [
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Calculadora que hace calculos básicos, consta de 3 distintos temas.",
+        "list": [
+            "Empleo de expresiones regulares para validar las entradas de datos",
+            "Grid, grid area, flex para la maquetación",
+            "Empleo de matchmedia para establecer el tema por defecto",
+            "Metodología BEM"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/calculadora/",
+            "repo": "https://github.com/fruizotero/calculadora"
+        }
+    },
+    {
+        "images": {
+            "desktop": "room.png",
+            "mobile": "room-mobile.PNG"
+        },
+        "name": "Room homepage",
+        "technologies": [
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Página maquetada con Grid, consta de un slider que van cambiando distintos elementos a la vez",
+        "list": [
+            "Empleo de clases para generar el Slider con javascript",
+            "Empleo de las grid areas para ordenar los elementos",
+            "Empleo de pseudoclases y psedoelementos",
+            "Delegación de Eventos"
+
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/html-css-js-practica-13/",
+            "repo": "https://github.com/fruizotero/html-css-js-practica-13"
+        }
+    },
+    {
+        "images": {
+            "desktop": "easybank.png",
+            "mobile": "easybank-mobile.PNG"
+        },
+        "name": "Easybank landing page",
+        "technologies": [
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Landing page donde se utilizan distintos posicionamientos, así como flex para el contenedor de las cards y el contenido interior de las cards",
+        "list": [
+            "Empleo de los distintos tipos de position",
+            "Empleo de flex",
+            "Uso de las medidas del viewport para el tamaño de la fuente, gap, paddings.",
+            "Empleo de transiciones"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/-html-css-practica-09-version-2/",
+            "repo": "https://github.com/fruizotero/-html-css-practica-09-version-2"
+        }
+    }
+]

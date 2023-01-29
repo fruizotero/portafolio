@@ -1,0 +1,90 @@
+/* **********     Reset CSS     ********** */
+
+html {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    scroll-behavior: smooth;
+    --bg-color: #1f2325;
+    --font-main-color: #e0e3e6;
+    --titles-subtitles-color: #dba00e;
+    --buttons-font-color: #000000;
+    --buttons-bg-color:#dda40f;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img,
+video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+input,
+button {
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    appearance: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    margin-block: 0;
+    font-weight: 400;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+@keyframes myAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+.body{
+    /* background-color: var(--bg-color); */
+}
+
+.icon__image,
+.menu__image,
+.close__image
+{
+    width: 2rem;
+    /* filter: brightness(0) invert(1); */
+}

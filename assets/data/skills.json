@@ -1,0 +1,54 @@
+{
+    "current": [
+        {
+            "image": "javascript.svg",
+            "nombre": "JavaScript"
+        },
+        {
+            "image": "html.svg",
+            "nombre": "HTML"
+        },
+        {
+            "image": "css.svg",
+            "nombre": "CSS"
+        },
+        {
+            "image": "php.svg",
+            "nombre": "PHP"
+        },
+        {
+            "image": "apirest.svg",
+            "nombre": "Api Rest"
+        },
+        {
+            "image": "git.svg",
+            "nombre": "Git"
+        },
+        {
+            "image": "mysql.svg",
+            "nombre": "MYSQL"
+        }
+    ],
+    "familiar": [
+        {
+            "image": "java.svg",
+            "nombre": "Java"
+        },
+        {
+            "image": "csharp.svg",
+            "nombre": "C#"
+        },
+        {
+            "image": "dart.svg",
+            "nombre": "Dart"
+        },
+        {
+            "image": "photoshop.svg",
+            "nombre": "Photoshop"
+        },
+        {
+            "image": "aegisub.svg",
+            "nombre": "Aegisub"
+        }
+    ]
+}
