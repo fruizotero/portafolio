@@ -24,33 +24,34 @@
             <img src="assets/img/images/logo.png" alt="Logo de la pagina web de Frank ruiz Otero" class="logo__image">
         </div>
         <nav class="nav">
+            <button class="button-close"></button>
             <div class="nav__links">
                 <a href="#home" class="nav__link">
-                    <div class="icon">
+                    <div class="icon icon-nav">
                         <img src="assets/img/icons/home.svg" alt="Icono de home" class="icon__image">
                     </div>
                     <p class="nav__text">Home</p>
                 </a>
                 <a href="#aboutme" class="nav__link">
-                    <div class="icon">
+                    <div class="icon icon-nav">
                         <img src="assets/img/icons/person.svg" alt="Icono de acerca de mí" class="icon__image">
                     </div>
                     <p class="nav__text">Acerca de mí</p>
                 </a>
                 <a href="#skills" class="nav__link">
-                    <div class="icon">
+                    <div class="icon icon-nav">
                         <img src="assets/img/icons/monitor-code.svg" alt="Icono de mis habilidades" class="icon__image">
                     </div>
                     <p class="nav__text">Habilidades</p>
                 </a>
                 <a href="#projects" class="nav__link">
-                    <div class="icon">
+                    <div class="icon icon-nav">
                         <img src="assets/img/icons/work-alt-bag.svg" alt="Icono de proyectos" class="icon__image">
                     </div>
                     <p class="nav__text">Proyectos</p>
                 </a>
                 <a href="#cv" class="nav__link">
-                    <div class="icon">
+                    <div class="icon icon-nav">
                         <img src="assets/img/icons/education.svg" alt="Icono de curriculum" class="icon__image">
                     </div>
                     <p class="nav__text">Currículum</p>
@@ -61,39 +62,21 @@
                     </div>
                     <p class="nav__text">Contacto</p>
                 </a>
-            </div>
-            <button class="button-close">cerrar</button>
-            <!-- <div class="close">
-                <img src="assets/img/icons/close-outline.svg" alt="Icono de cerrar" class="close__image">
-            </div> -->
+            </div>        
         </nav>
-        <button class="button-menu">menu</button>
-        <!-- <div class="menu">
-            <img src="assets/img/icons/menu.svg" alt="Icono de menu" class="menu__image">
-        </div> -->
+        <button class="button-menu"></button>
     </header>
    
     <main class="main">
-        <section class="section1" id="home">
+        <section class="section section-1" id="home">
 
-            <!-- <div class="section__title">
-                <div class="section__title__main">
-                    <div class="icon">
-                        <img src="" alt="" class="icon__image">
-                    </div>
-                    <h2 class="section__title__text"></h2>
-                </div>
-                <div class="section__title__secondary">
-                    <h3 class="section__title__subtitle">subtítulo</h3>
-                </div>
-            </div> -->
-            <div class="section__main">
+            <div class="section__main section-1__main">
                 <div class="photo">
                     <img src="assets/img/images/profile.jpg" alt="Foto de frank" class="photo__image">
                 </div>
                 <div class="section__text">
                     <h1 class="section__salute">Hola, soy Frank.</h1>
-                    <div class="section__paragraphs">
+                    <div class="section-1__paragraphs">
                         <p class="section__paragraph">
                             Soy un desarrollador Web de Vigo, actualmente enfocado en el Front-End. Solía trabajar como
                             administrador de Sistemas, pero tras idas y vueltas terminé como programador, que es algo
@@ -112,7 +95,7 @@
             </div>
 
         </section>
-        <section class="section2" id="aboutme">
+        <section class="section section-2" id="aboutme">
             <div class="section__title">
                 <div class="section__title__main">
                     <div class="icon">
@@ -121,12 +104,12 @@
                     <h2 class="section__title__text">Acerca de mí</h2>
                 </div>
                 <div class="section__title__secondary">
-                    <h3 class="section__title__subtitle">subtítulo</h3>
+                    <h3 class="section__title__subtitle">Un poco de información</h3>
                     <!-- //TODO::subs -->
                 </div>
             </div>
             <div class="section__main">
-                <div class="section__paragraphs">
+                <div class="section-2__paragraphs ">
                     <p class="section__paragraph">
                         <strong>Hola soy Frank Ruiz.</strong> Soy un desarrollador junior que en el último año he estado
                         enfocado en el front, me gusta el poder recibir el diseño e ir maquetándolo desde cero, tambíen
@@ -144,13 +127,13 @@
                     </p>
                     <p class="section__paragraph">
                         Tengo muchas ganas de poder trabajar con un grupo apropiado y seguir mejorando mis habilidades.
-                        Si te interesa contactarte conmigo por cualquiera de los medios que te dejo en la sección de
+                        Si te interesa contactarte conmigo, por favor hazlo por cualquiera de los medios que dejo en la sección de
                         contacto.
                     </p>
                 </div>
             </div>
         </section>
-        <section class="section3" id="skills">
+        <section class="section section-3" id="skills">
             <div class="section__title">
                 <div class="section__title__main">
                     <div class="icon">
@@ -159,26 +142,32 @@
                     <h2 class="section__title__text">Habilidades</h2>
                 </div>
                 <div class="section__title__secondary">
-                    <h3 class="section__title__subtitle">subtítulo</h3>
+                    <h3 class="section__title__subtitle">
+                        Lenguages con los que trabajo y estoy Familiarizado</h3>
                 </div>
             </div>
-            <div class="section__main">
+            <div class="section__main ">
 
-                <div class="skills__content">
+                <div class="skills__content ">
                     <div class="skills__main">
-                        <h4 class="skills__main__title">Lenguajes y Programas (En la Actualidad)</h4>
+                        <h4 class="skills__main__title">
+                            <span>
+                                Lenguajes y Programas 
+                            </span>
+                            <span>
+                                (En la Actualidad)        
+                            </span>
+                        </h4>
                         <div class="skills__main__content">
                             <!-- //TODO skills-->
-                            <div class="skill">
-                                <div class="skill__image__container">
-                                    <img src="assets/img/icons/javascript.svg" alt="descripción" class="skill__image">
-                                </div>
-                                <h5 class="skill__title"></h5>
-                            </div>
+                           
                         </div>
                     </div>
                     <div class="skills__secondary">
-                        <h4 class="skills__secondary__title">Lenguajes y Programas (Familiarizado)</h4>
+                        <h4 class="skills__secondary__title">
+                            <span>Lenguajes y Programas</span>
+                            <span>(Familiarizado)</span>
+                             </h4>
                         <div class="skills__secondary__content">
                             <!-- //TODO skills-->
                         </div>
@@ -186,7 +175,7 @@
                 </div>
             </div>
         </section>
-        <section class="section4" id="projects">
+        <section class="section section-4" id="projects">
             <div class="section__title">
                 <div class="section__title__main">
                     <div class="icon">
@@ -195,51 +184,16 @@
                     <h2 class="section__title__text">Proyectos</h2>
                 </div>
                 <div class="section__title__secondary">
-                    <h3 class="section__title__subtitle">subtítulo</h3>
+                    <h3 class="section__title__subtitle">Algunos de mis proyectos</h3>
                 </div>
             </div>
-            <div class="section__main">
+            <div class="section__main section__main-projects ">
                 <!-- //TODO::card project -->
-                <div class="project">
-                    <div class="project__images">
-                        <div class="monitor">
-                            <div class="monitor__content__image">
-                                <img src="assets/img/images/calculadora.png" alt="" class="monitor__image">
-                            </div>
-                        </div>
-                        <div class="mobile">
-                            <div class="mobile__content__image">
-                                <img src="assets/img/images/calculadora-mobile.PNG" alt="" class="mobile__image">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project__text">
-                        <h5 class="project__title"></h5>
-                        <div class="project__techs">
-                            <!-- //TODO:: añadir clase skill--tech en javascript -->
-                            <div class="skill">
-                                <div class="skill__image__container">
-                                    <img src="assets/img/icons/javascript.svg" alt="descripción" class="skill__image">
-                                </div>
-                                <h5 class="skill__title"></h5>
-                            </div>
-                        </div>
-                        <p class="project__description"></p>
-                        <ul class="project__list"></ul>
-                    </div>
-                    <div class="project__links">
-                        <div class="project__link">
-                            <a href="" target="_blank" class="project__link__repo">Respositorio</a>
-                        </div>
-                        <div class="project__link">
-                            <a href="" target="_blank" class="project__link__live">Live</a>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
 
         </section>
-        <section class="section5" id="cv">
+        <section class="section section-5" id="cv">
             <div class="section__title">
                 <div class="section__title__main">
                     <div class="icon">
@@ -248,10 +202,13 @@
                     <h2 class="section__title__text">Currículum</h2>
                 </div>
                 <div class="section__title__secondary">
-                    <h3 class="section__title__subtitle">subtítulo</h3>
+                    <h3 class="section__title__subtitle">Estudio y prácticas</h3>
                 </div>
             </div>
-            <div class="section__main">
+            <div class="section__main section-5__main ">
+                <p class="section-5__main__description">
+                    Estos son algunos de los lugares donde he realizado mis prácticas, además de los estudios educativos más relevantes.
+                </p>
                 <div class="jobs">
                     <h4 class="jobs__title">Empleos</h4>
                     <ul class="jobs__list">
@@ -276,7 +233,7 @@
                 </div>
             </div>
         </section>
-        <section class="section6" id="contact">
+        <section class="section section-6" id="contact">
             <div class="section__title">
                 <div class="section__title__main">
                     <div class="icon">
@@ -286,24 +243,24 @@
                     <h2 class="section__title__text">Contacto</h2>
                 </div>
                 <div class="section__title__secondary">
-                    <h3 class="section__title__subtitle">subtítulo</h3>
+                    <h3 class="section__title__subtitle">Envíame un mensaje</h3>
                 </div>
             </div>
-            <div class="section__main">
+            <div class="section__main ">
                 <form class="form-contact">
                     <!-- <label for="name">Nombre:</label> -->
-                    <input type="text" id="name" name="name" pattern="[A-Za-z\s]+" placeholder="Tu Nombre" required>
+                    <input type="text" class="form-name" id="name" name="name" pattern="[A-Za-z\s]+" placeholder="Tu Nombre" required>
                   
                     <!-- <label for="email">Email:</label> -->
-                    <input type="email" id="email" name="email" placeholder="Tu Email" required>
+                    <input type="email" class="form-email" id="email" name="email" placeholder="Tu Email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" required>
                   
                     <!-- <label for="subject">Asunto:</label> -->
-                    <input type="text" id="subject" name="subject" pattern="[A-Za-z\s]+" placeholder="Asunto" required>
+                    <input type="text" class="form-subject" id="subject" name="subject" pattern="[A-Za-z\s]+" placeholder="Asunto" >
                   
                     <!-- <label for="message">Comentario:</label> -->
-                    <textarea id="message" name="message" rows="5" maxlength="2500" placeholder="Mensaje" required></textarea>
+                    <textarea  class="form-message" id="message" name="message" rows="5" maxlength="2500" placeholder="Mensaje" required></textarea>
                   
-                    <input type="submit" class="button-submit" value="Enviar">
+                    <input type="submit" class="button-submit hover" value="Enviar">
                   </form>
                   
             </div>
@@ -312,22 +269,22 @@
     <footer class="footer">
         <div class="footer__links">
             <div class="footer__left">
-                <a href="#" class="footer__link">
+                <a href="https://github.com/fruizotero" target="_blank" class="footer__link">
                     <div class="icon">
                         <img src="assets/img/icons/github.svg" alt="icono de github" class="icon__image">
                     </div>
                 </a>
-                <a href="#" class="footer__link">
+                <a href="https://www.linkedin.com/in/fruizotero/" target="_blank" class="footer__link">
                     <div class="icon">
                         <img src="assets/img/icons/linkedin-in.svg" alt="icono de linkedin" class="icon__image">
                     </div>
                 </a>
-                <a href="#" class="footer__link">
+                <a href="https://twitter.com/fruizotero" target="_blank" class="footer__link">
                     <div class="icon">
                         <img src="assets/img/icons/twitter.svg" alt="icono de twitter" class="icon__image">
                     </div>
                 </a>
-                <a href="#" class="footer__link">
+                <a href="https://www.frontendmentor.io/profile/fruizotero" target="_blank" class="footer__link">
                     <div class="icon">
                         <img src="assets/img/icons/frontend-mentor-seeklogo.com.svg" alt="icono de frontend mentor"
                             class="icon__image">
@@ -337,11 +294,81 @@
             <div class="footer__right">
                 <!-- <a href="#" class="footer__link">
                 </a> -->
-                <button class="button-theme">Tema</button>
+                <button class="button-theme"></button>
             </div>
         </div>
-        <button class="button-top">up</button>
+        <button class="button-top"></button>
     </footer>
+    <template class="template-skill">
+        <div class="skill">
+            <div class="skill__image__container">
+                <img src="assets/img/icons/javascript.svg" alt="descripción" class="skill__image">
+            </div>
+            <h5 class="skill__title">javascript</h5>
+        </div>
+    </template>
+    <template class="template-project">
+        <div class="project">
+            <div class="project__images">
+                <div class="monitor">
+                    <div class="monitor__content__image">
+                        <img src="assets/img/images/calculadora.png" alt="" class="monitor__image">
+                    </div>
+                    <div class="monitor__bottom"></div>
+                </div>
+                <div class="mobile">
+                    <div class="mobile__content__image">
+                        <img src="assets/img/images/calculadora-mobile.PNG" alt="" class="mobile__image">
+                    </div>
+                </div>
+            </div>
+            <div class="project__text">
+                <h5 class="project__title">Calculadora</h5>
+                <div class="project__description-container">
+                    <p class="project__description">Calculadora que hace calculos básicos, consta de 3 distintos temas</p>
+                </div>
+                <div class="project__techs">
+                    <!-- //TODO:: añadir clase skill--tech en javascript -->
+                    <p class="project__techs__title">Lenguajes Empleados:</p>
+                    <div class="project__techs__content">
+                        <div class="skill skill--tech">
+                            <div class="skill__image__container">
+                                <img src="assets/img/icons/html.svg" alt="icono de html" class="skill__image">
+                            </div>
+                            <h5 class="skill__title">html</h5>
+                        </div>
+                        <div class="skill skill--tech">
+                            <div class="skill__image__container">
+                                <img src="assets/img/icons/css.svg" alt="icono de css" class="skill__image">
+                            </div>
+                            <h5 class="skill__title">css</h5>
+                        </div>
+                        <div class="skill skill--tech">
+                            <div class="skill__image__container">
+                                <img src="assets/img/icons/javascript.svg" alt="icono de javascript" class="skill__image">
+                            </div>
+                            <h5 class="skill__title">javascript</h5>
+                        </div>
+                    </div>
+                </div>
+                
+                <ul class="project__list">
+                    <li class="project__item">Empleo de expresiones regulares para validar las entradas de datos</li>
+                    <li class="project__item">Grid, grid area, flex para la maquetación</li>
+                    <li class="project__item">Empleo de matchmedia para establecer el tema por defecto</li>
+                    <li class="project__item">Metodología BEM</li>
+                </ul>
+            </div>
+            <div class="project__links">
+                <div class="project__link">
+                    <a href="https://github.com/fruizotero/calculadora" target="_blank" class="project__link__repo">Respositorio</a>
+                </div>
+                <div class="project__link">
+                    <a href="https://fruizotero.github.io/calculadora/" target="_blank" class="project__link__live">Live</a>
+                </div>
+            </div>
+        </div>
+    </template>
     <script src="js/index.js" type="module"></script>
 </body>
 

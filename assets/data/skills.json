@@ -2,53 +2,53 @@
     "current": [
         {
             "image": "javascript.svg",
-            "nombre": "JavaScript"
+            "name": "JavaScript"
         },
         {
             "image": "html.svg",
-            "nombre": "HTML"
+            "name": "HTML"
         },
         {
             "image": "css.svg",
-            "nombre": "CSS"
+            "name": "CSS"
         },
         {
             "image": "php.svg",
-            "nombre": "PHP"
+            "name": "PHP"
         },
         {
             "image": "apirest.svg",
-            "nombre": "Api Rest"
+            "name": "Api Rest"
         },
         {
             "image": "git.svg",
-            "nombre": "Git"
+            "name": "Git"
         },
         {
             "image": "mysql.svg",
-            "nombre": "MYSQL"
+            "name": "MYSQL"
         }
     ],
     "familiar": [
         {
             "image": "java.svg",
-            "nombre": "Java"
+            "name": "Java"
         },
         {
             "image": "csharp.svg",
-            "nombre": "C#"
+            "name": "C#"
         },
         {
             "image": "dart.svg",
-            "nombre": "Dart"
+            "name": "Dart"
         },
         {
             "image": "photoshop.svg",
-            "nombre": "Photoshop"
+            "name": "Photoshop"
         },
         {
             "image": "aegisub.svg",
-            "nombre": "Aegisub"
+            "name": "Aegisub"
         }
     ]
 }
