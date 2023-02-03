@@ -246,7 +246,7 @@
                     <h3 class="section__title__subtitle">Envíame un mensaje</h3>
                 </div>
             </div>
-            <div class="section__main ">
+            <div class="section__main section-6__main">
                 <form class="form-contact">
                     <!-- <label for="name">Nombre:</label> -->
                     <input type="text" class="form-name" id="name" name="name" pattern="[A-Za-z\s]+" placeholder="Tu Nombre" required>
@@ -261,7 +261,11 @@
                     <textarea  class="form-message" id="message" name="message" rows="5" maxlength="2500" placeholder="Mensaje" required></textarea>
                   
                     <input type="submit" class="button-submit hover" value="Enviar">
-                  </form>
+                </form>
+                <div class="loader none">
+                    <img src="assets/img/icons/loader.svg" alt="Icon loader" class="loader__image">
+                </div>
+                <p class="message-form"></p>
                   
             </div>
         </section>

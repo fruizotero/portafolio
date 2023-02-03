@@ -60,6 +60,7 @@ d.addEventListener("submit", async e => {
     if (e.target.matches(".form-contact")) {
 
         e.preventDefault();
+        d.querySelector(".loader").classList.remove("none");
 
         try {
             let form = new FormData(e.target);
@@ -71,13 +72,18 @@ d.addEventListener("submit", async e => {
 
             if (!resp.ok) throw { status: resp.status, statusText: resp.statusText }
 
-            console.log(json);
+            d.querySelector(".loader").classList.add("none");
+            d.querySelector(".message-form").textContent = json["message"];
+            if (!json["err"]) {
+                e.target.reset();
+            }
 
         } catch (error) {
 
             let message = error.statusText || "Ocurrió un error en el envío";
+            d.querySelector(".loader").classList.add("none");
+            d.querySelector(".message-form").textContent = message
 
-            console.log(message);
 
         }
 

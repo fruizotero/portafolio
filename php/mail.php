@@ -28,12 +28,12 @@ if (isset($_POST)) {
   if($send_mail) {
     $res = [
       "err" => false,
-      "message" => "Tus datos han sido enviados"
+      "message" => "Tu mensaje ha sido envido."
     ];
   } else {
     $res = [
       "err" => true,
-      "message" => "Error al enviar tus datos. Intenta nuevamente."
+      "message" => "Error al enviar tu mensaje. Intenta nuevamente."
     ];
   }
 
