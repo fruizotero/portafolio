@@ -2,7 +2,7 @@
     {
         "images": {
             "desktop": "restcountries.png",
-            "mobile": "restcountries-mobile.PNG"
+            "mobile": "restcountries-mobile.png"
         },
         "name": "Countries con Rest",
         "technologies": [
@@ -26,7 +26,7 @@
     {
         "images": {
             "desktop": "space-tourism.png",
-            "mobile": "space-tourism-mobilw.PNG"
+            "mobile": "space-tourism-mobilw.png"
         },
         "name": "Turismo Espacial",
         "technologies": [
@@ -49,7 +49,7 @@
     {
         "images": {
             "desktop": "ecomerce.png",
-            "mobile": "ecomerce-mobile.PNG"
+            "mobile": "ecomerce-mobile.png"
         },
         "name": "Producto de Ecommerce",
         "technologies": [
@@ -72,7 +72,7 @@
     {
         "images": {
             "desktop": "filter.png",
-            "mobile": "filter-mobile.PNG"
+            "mobile": "filter-mobile.png"
         },
         "name": "Listado de trabajos con filtro",
         "technologies": [
@@ -95,7 +95,7 @@
     {
         "images": {
             "desktop": "pricing.png",
-            "mobile": "pricing-mobile.PNG"
+            "mobile": "pricing-mobile.png"
         },
         "name": "Componente interactivo de Precios",
         "technologies": [
@@ -118,7 +118,7 @@
     {
         "images": {
             "desktop": "calculadora.png",
-            "mobile": "calculadora-mobile.PNG"
+            "mobile": "calculadora-mobile.png"
         },
         "name": "Calculadora",
         "technologies": [
@@ -141,7 +141,7 @@
     {
         "images": {
             "desktop": "room.png",
-            "mobile": "room-mobile.PNG"
+            "mobile": "room-mobile.png"
         },
         "name": "Room homepage",
         "technologies": [
@@ -165,7 +165,7 @@
     {
         "images": {
             "desktop": "easybank.png",
-            "mobile": "easybank-mobile.PNG"
+            "mobile": "easybank-mobile.png"
         },
         "name": "Easybank landing page",
         "technologies": [

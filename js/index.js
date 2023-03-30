@@ -64,17 +64,30 @@ d.addEventListener("submit", async e => {
 
         try {
             let form = new FormData(e.target);
-            let resp = await fetch("php/mail.php", {
+            const obj = {};
+            for (let [key, value] of form.entries()) {
+                obj[key] = value;
+            }
+
+            let resp = await fetch("https://formsubmit.co/ajax/frankid74@gmail.com", {
                 method: "POST",
-                body: form
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(obj)
             });
+
             let json = await resp.json();
 
-            if (!resp.ok) throw { status: resp.status, statusText: resp.statusText }
+            // console.log(json);
+
+            if (!json["success"]) throw { status: resp.status, statusText: resp.statusText }
 
             d.querySelector(".loader").classList.add("none");
-            d.querySelector(".message-form").textContent = json["message"];
-            if (!json["err"]) {
+            d.querySelector(".message-form").textContent = "Tu mensaje ha sido enviado";
+
+            if (json["success"]) {
                 e.target.reset();
             }
 

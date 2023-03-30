@@ -201,6 +201,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
 }
 
 .section__main {
