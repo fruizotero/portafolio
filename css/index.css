@@ -394,10 +394,6 @@ h2 {
 }
 
 
-.monitor__image {
-    object-fit: cover;
-}
-
 .monitor__bottom {
     height: 3rem;
     width: 35%;
@@ -891,7 +887,7 @@ input[type="email"] {
     }
 
     .section__main-projects {
-        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
         gap: 2rem;
     }
 
