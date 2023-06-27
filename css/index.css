@@ -347,12 +347,15 @@ h2 {
     border-radius: 1rem;
     border: thin solid var(--black-color-transparent);
     box-shadow: 0 0 0.5rem 0.1rem var(--black-color-transparent);
+    overflow: hidden;
 }
 
 .project__images {
     display: flex;
     gap: 1rem;
     width: 100%;
+    height: 12.5rem;
+    /* max-height: 15rem; */
 }
 
 .monitor {
@@ -404,10 +407,12 @@ h2 {
 }
 
 .mobile {
-    align-self: flex-end;
+    align-self: stretch;
     position: relative;
+    display: flex;
     width: 30%;
     padding: 1.5rem 0.75rem 1.25rem 0.75rem;
+    margin-top: 1rem;
     background-color: #000;
     border-radius: 1rem;
     overflow: hidden;
@@ -442,6 +447,10 @@ h2 {
     border-radius: 0.25rem;
     transform: translate(-50%, 0);
 
+}
+
+.mobile__content__image{
+    display: flex;
 }
 
 .mobile__image {

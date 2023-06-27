@@ -6,21 +6,45 @@
         },
         "name": "Countries con Rest",
         "technologies": [
+            "react",
             "html",
             "css",
             "javascript",
             "apirest"
         ],
-        "description": "Web de países creada utilizando datos de una apirest externa. Se puede cambiar de tema, filtrar por continentes y buscar los países que se requieran",
+        "description": "Web de países creada utilizando datos de una api externa. Se puede cambiar el tema, filtrar por continentes y buscar los países que se requieran. Además de React para la creación de la interfaz, se han utilizando paquetes de 'MUI' para la paginación y 'React-router' para el enrutamiento ",
         "list": [
-            "Paginación con Javascript",
-            "Flex para la maquetación",
-            "Fetch para cargar headers y peticiones",
-            "Uso de sessionstorage y localstorage"
+            "Paginación con Material UI",
+            "Creación de Componentes con React",
+            "Custom Hooks para las peticiones",
+            "Expresiones regulares"
         ],
         "links": {
-            "live": "https://fruizotero.github.io/REST-Countries/",
-            "repo": "https://github.com/fruizotero/REST-Countries"
+            "live": "https://fruizotero.github.io/react-rest-countries/",
+            "repo": "https://github.com/fruizotero/react-rest-countries"
+        }
+    },
+    {
+        "images": {
+            "desktop": "devjobs.png",
+            "mobile": "devjobs-mobile.png"
+        },
+        "name": "DevJobs Web App",
+        "technologies": [
+            "react",
+            "html",
+            "css",
+            "javascript"
+        ],
+        "description": "Página que se encarga de filtrar una serie de trabajos através del nombre, la localización o el tipo de contrato. Consta de una página principal donde muestra los trabajos y otra donde se muestra los datos detallados del trabajo",
+        "list": [
+            "Uso de los Hooks useeffect, usestate, usecontext",
+            "Uso de 'react-router' para el enrutamiento",
+            "Despliegue realizado con las Github Actions y la guia de vite para el workflow"
+        ],
+        "links": {
+            "live": "https://fruizotero.github.io/react-devjobs-web-app/",
+            "repo": "https://github.com/fruizotero/react-devjobs-web-app"
         }
     },
     {
@@ -76,20 +100,21 @@
         },
         "name": "Listado de trabajos con filtro",
         "technologies": [
+            "react",
             "html",
             "css",
             "javascript"
         ],
-        "description": "Página con una lista de trabajos que consta con una serie de etiquetas las cuales se pueden ir seleccionando e irán agregandose al filtro para filtrar los distintos trabajos que cumplan las condiciones",
+        "description": "Página con una lista de trabajos que consta con una serie de etiquetas las cuales se pueden ir seleccionando e irán agregándose al filtro para filtrar los distintos trabajos que cumplan las condiciones",
         "list": [
-            "Delegación de eventos",
-            "Fragmentos y Templates para añadir elementos al DOM",
-            "Evento DOMCotentLoaded para la carga de elementos al inicio",
-            "Fetch para la carga de datos desde archivo json"
+            "Hooks y hooks personalizados",
+            "Empleo de las funciones every y some para el filtro del array",
+            "Creación Dinámica de los componentes",
+            "Destructuración de propiedades de objetos"
         ],
         "links": {
-            "live": "https://fruizotero.github.io/Job-listings-with-filtering/",
-            "repo": "https://github.com/fruizotero/Job-listings-with-filtering"
+            "live": "https://fruizotero.github.io/react-static-job-listings/",
+            "repo": "https://github.com/fruizotero/react-static-job-listings"
         }
     },
     {
@@ -140,49 +165,25 @@
     },
     {
         "images": {
-            "desktop": "room.png",
-            "mobile": "room-mobile.png"
+            "desktop": "github.png",
+            "mobile": "github-mobile.png"
         },
-        "name": "Room homepage",
+        "name": "Github User Search App",
         "technologies": [
+            "react",
             "html",
             "css",
             "javascript"
         ],
-        "description": "Página maquetada con Grid, consta de un slider que van cambiando distintos elementos a la vez",
+        "description": "Página creada con React. Utiliza la api de Github y se encarga de buscar los nombres de usuarios.",
         "list": [
-            "Empleo de clases para generar el Slider con javascript",
-            "Empleo de las grid areas para ordenar los elementos",
-            "Empleo de pseudoclases y psedoelementos",
-            "Delegación de Eventos"
+            "Uso de hooks y hooks personalizados"
 
         ],
         "links": {
-            "live": "https://fruizotero.github.io/html-css-js-practica-13/",
-            "repo": "https://github.com/fruizotero/html-css-js-practica-13"
-        }
-    },
-    {
-        "images": {
-            "desktop": "easybank.png",
-            "mobile": "easybank-mobile.png"
-        },
-        "name": "Easybank landing page",
-        "technologies": [
-            "html",
-            "css",
-            "javascript"
-        ],
-        "description": "Landing page donde se utilizan distintos posicionamientos, así como flex para el contenedor de las cards y el contenido interior de las cards",
-        "list": [
-            "Empleo de los distintos tipos de position",
-            "Empleo de flex",
-            "Uso de las medidas del viewport para el tamaño de la fuente, gap, paddings.",
-            "Empleo de transiciones"
-        ],
-        "links": {
-            "live": "https://fruizotero.github.io/-html-css-practica-09-version-2/",
-            "repo": "https://github.com/fruizotero/-html-css-practica-09-version-2"
+            "live": "https://fruizotero.github.io/react-github-user/",
+            "repo": "https://github.com/fruizotero/react-github-user"
         }
     }
+    
 ]

@@ -1,6 +1,10 @@
 {
     "current": [
         {
+            "image": "react.svg",
+            "name": "React"
+        },
+        {
             "image": "javascript.svg",
             "name": "JavaScript"
         },
@@ -11,6 +15,10 @@
         {
             "image": "css.svg",
             "name": "CSS"
+        },
+        {
+            "image": "bootstrap.svg",
+            "name": "BootStrap"
         },
         {
             "image": "php.svg",
