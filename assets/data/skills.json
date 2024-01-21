@@ -1,13 +1,23 @@
 {
     "current": [
         {
-            "image": "react.svg",
-            "name": "React"
+            "image": "java.svg",
+            "name": "Java"
         },
+        
         {
             "image": "javascript.svg",
             "name": "JavaScript"
         },
+        {
+            "image": "php.svg",
+            "name": "PHP"
+        },
+        {
+            "image": "react.svg",
+            "name": "React"
+        },
+        
         {
             "image": "html.svg",
             "name": "HTML"
@@ -20,10 +30,7 @@
             "image": "bootstrap.svg",
             "name": "BootStrap"
         },
-        {
-            "image": "php.svg",
-            "name": "PHP"
-        },
+       
         {
             "image": "apirest.svg",
             "name": "Api Rest"
@@ -36,12 +43,10 @@
             "image": "mysql.svg",
             "name": "MYSQL"
         }
+        
     ],
     "familiar": [
-        {
-            "image": "java.svg",
-            "name": "Java"
-        },
+       
         {
             "image": "csharp.svg",
             "name": "C#"
@@ -49,6 +54,14 @@
         {
             "image": "dart.svg",
             "name": "Dart"
+        },
+        {
+            "image": "mongodb.svg",
+            "name": "MongoDB"
+        },
+        {
+            "image": "redux.svg",
+            "name": "Redux"
         },
         {
             "image": "photoshop.svg",
