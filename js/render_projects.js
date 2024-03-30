@@ -9,8 +9,8 @@ export const renderProjects = (projects = {}) => {
     let $templateSkill = d.querySelector(".template-skill").content;
 
     projects.forEach(project => {
-        $templateProject.querySelector(".monitor__image").setAttribute("src", `assets/img/images/${project["images"]["desktop"]}`);
-        $templateProject.querySelector(".mobile__image").setAttribute("src", `assets/img/images/${project["images"]["mobile"]}`);
+        $templateProject.querySelector(".monitor__image").setAttribute("src", `assets/img/images/${project["images"]["desktop"]}`.toLowerCase());
+        $templateProject.querySelector(".mobile__image").setAttribute("src", `assets/img/images/${project["images"]["mobile"]}`.toLowerCase());
         $templateProject.querySelector(".project__title").textContent = project["name"];
         $templateProject.querySelector(".project__description").textContent = project["description"];
         //Lenguajes utilizados
