@@ -1,6 +1,10 @@
 {
     "current": [
         {
+            "image": "spring.svg",
+            "name": "Spring"
+        },
+        {
             "image": "java.svg",
             "name": "Java"
         },

@@ -1,6 +1,31 @@
 [
     {
         "images": {
+            "desktop": "notes-desktop.png",
+            "mobile": "notes-mobile.png"
+        },
+        "name": "Notes Spring Boot",
+        "technologies": [
+            "spring",
+            "java",
+            "apirest",
+            "docker"
+        ],
+        "description": "API REST hecha con Spring que consta de unos usuarios, sus roles y notas. Sirvió para familiarizarse con el entorno de Spring Boot y tambien con docker. Se trata de un CRUD básico donde intento implementar buenas prácticas, tiene todos los métodos funcionales (GET, POST, UPDATE, DELETE)",
+        "list": [
+            "Mapeo con Modelmapper",
+            "JPA/Hibernate",
+            "Docker",
+            "Lombok para la creación de código repetetivo",
+            "Inyección de dependencias"
+        ],
+        "links": {
+            "live": "https://notes.fruizotero.info/docs",
+            "repo": "https://github.com/fruizotero/SB-Notes"
+        }
+    },
+    {
+        "images": {
             "desktop": "restcountries.png",
             "mobile": "restcountries-mobile.png"
         },
@@ -161,28 +186,6 @@
         "links": {
             "live": "https://fruizotero.github.io/calculadora/",
             "repo": "https://github.com/fruizotero/calculadora"
-        }
-    },
-    {
-        "images": {
-            "desktop": "github.png",
-            "mobile": "github-mobile.png"
-        },
-        "name": "Github User Search App",
-        "technologies": [
-            "react",
-            "html",
-            "css",
-            "javascript"
-        ],
-        "description": "Página creada con React. Utiliza la api de Github y se encarga de buscar los nombres de usuarios.",
-        "list": [
-            "Uso de hooks y hooks personalizados"
-
-        ],
-        "links": {
-            "live": "https://fruizotero.github.io/react-github-user/",
-            "repo": "https://github.com/fruizotero/react-github-user"
         }
     }
     
