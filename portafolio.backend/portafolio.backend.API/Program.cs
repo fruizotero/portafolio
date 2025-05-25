@@ -4,12 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using portafolio.backend.API.Contexto;
 using portafolio.backend.API.Utilidades;
+using portafolio.backend.API.Servicios;
+using portafolio.backend.API.Contexto.Repositorios;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Inyección de dependencias de la clase JWTHelper
 builder.Services.AddScoped<JWTHelper>();
+builder.Services.AddScoped<AutenticacionServicio>();
+builder.Services.AddScoped<UsuariosAdministradoresRepositorio>();
 
 // DbContext de EF core 
 builder.Services.AddDbContext<ContextoPortafolio>(options => options.UseSqlServer("name=DefaultConnection"));
