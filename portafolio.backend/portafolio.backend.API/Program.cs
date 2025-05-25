@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using portafolio.backend.API.Contexto;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// DbContext de EF core 
+builder.Services.AddDbContext<ContextoPortafolio>(options => options.UseSqlServer("name=DefaultConnection"));
+// DbContext de EF core
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
