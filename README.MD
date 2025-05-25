@@ -46,3 +46,7 @@ add-migration Inicial -OutputDir "Contexto/Migraciones"
 ```bash
 update-database
 ```
+
+### usuario por defecto
+usuario: admin@portafolio.com
+contraseña: 1234
