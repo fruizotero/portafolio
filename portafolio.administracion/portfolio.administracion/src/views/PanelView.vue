@@ -2,9 +2,5 @@
 </script>
 
 <template>
-<main>
-  <RouterView />
-</main>
+  <h1>vista panel</h1>
 </template>
-
-

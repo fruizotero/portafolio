@@ -50,3 +50,23 @@ update-database
 ### usuario por defecto
 usuario: admin@portafolio.com
 contraseña: 1234
+
+## Administración (Front)
+
+### Dependencias
+- daisyUI
+- Tailwindcss
+- axios
+- pinya
+- tiptap
+
+### instalación tailwind
+https://dev.to/osalumense/install-tailwind-css-v4-in-a-vue-3-vite-project-319g
+### instalación daisyui
+https://daisyui.com/docs/install/vue/
+
+### .env
+Configuración de las variables de entorno
+```json
+VITE_API_URL=https://localhost:7161
+```
