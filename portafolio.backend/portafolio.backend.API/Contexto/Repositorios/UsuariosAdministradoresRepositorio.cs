@@ -28,5 +28,10 @@ namespace portafolio.backend.API.Contexto.Repositorios
             return usuarioEncontrado;
         }
 
+        public async Task<UsuarioAdministrador> ObtenerPorIdAsync(int id)
+        {
+            return await _contexto.UsuariosAdministradores.FindAsync(id);
+        }
+
     }
 }

@@ -9,6 +9,8 @@ namespace portafolio.backend.API.Contexto
     {
         public DbSet<UsuarioAdministrador> UsuariosAdministradores { get; set; }
         public DbSet<Perfil> Perfiles { get; set; }
+        public DbSet<Habilidad> Habilidades { get; set; } = null!;
+
         public ContextoPortafolio(DbContextOptions options) : base(options)
         {
         }

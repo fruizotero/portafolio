@@ -35,6 +35,7 @@ Lista de habilidades técnicas
 | Nombre    | Nombre de la habilidad, no nulo           |
 | LogoUrl   | URL de logo, opcional                     |
 | EsActual  | Booleano: true = está vigente, false = no |
+| UsuarioAdministradorId  | FK → UsuarioAdmin(Id), no nulo |
 | CreatedAt | Fecha creación                            |
 | UpdatedAt | Fecha última modificación                 |
 
