@@ -14,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<JWTHelper>();
 builder.Services.AddScoped<AutenticacionServicio>();
 builder.Services.AddScoped<UsuariosAdministradoresRepositorio>();
+builder.Services.AddScoped<PerfilServicio>();
+builder.Services.AddScoped<PerfilRespositorio>();
 
 // DbContext de EF core 
 builder.Services.AddDbContext<ContextoPortafolio>(options => options.UseSqlServer("name=DefaultConnection"));

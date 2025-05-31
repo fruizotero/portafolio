@@ -17,11 +17,12 @@ Datos personales básicos y bio
 | -------------- | ------------------------------- |
 | Id             | PK, Identity                    |
 | UsuarioAdminId | FK → UsuarioAdmin(Id), no nulo  |
-| Nombres        | Nombre(s), no nulo              |
+| Nombre         | Nombre(s), no nulo              |
 | Apellidos      | Apellidos, no nulo              |
-| ShortBio       | Descripción breve, no nulo      |
-| LongBio        | Descripción extendida, opcional |
-| PhotoUrl       | URL foto de perfil, opcional    |
+| Saludo         | Saludo de la primera sección |
+| Descripcion    | Descripción breve de la primera sección|
+| AcercaDeMi        | Descripción extendida. Sección 2 |
+| FotoURL       | URL foto de perfil, opcional    |
 | CreatedAt      | Fecha creación                  |
 | UpdatedAt      | Fecha última modificación       |
 
