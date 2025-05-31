@@ -16,8 +16,12 @@ export function useAuth() {
     error.value = null
     try {
       const response = await api.post('/Autenticacion/login', { email, password })
-      token.value = response.data.token
-      localStorage.setItem('token', token.value)
+      const { datos } = response.data
+      const{token:tokenResponse, usuarioId}= datos
+      token.value = tokenResponse
+      localStorage.setItem('token',token.value)
+      localStorage.setItem('usuarioId', usuarioId)
+      localStorage.setItem('email', email)
     } catch (err) {
       error.value = err.response?.data?.mensaje || 'Error al iniciar sesión'
     } finally {
