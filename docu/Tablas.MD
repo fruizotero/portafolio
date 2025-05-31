@@ -51,6 +51,7 @@ Tarjetas de proyectos con orden y versiones de imagen
 | RepoUrl          | Enlace al repositorio, opcional                     |
 | LiveUrl          | Enlace al sitio desplegado, opcional                |
 | Orden            | Entero para ordenar/resaltar, no nulo (default = 0) |
+| UsuarioAdministradorId  | FK → UsuarioAdmin(Id), no nulo |
 | CreatedAt        | Fecha creación                                      |
 | UpdatedAt        | Fecha última modificación                           |
 
