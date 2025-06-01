@@ -13,6 +13,7 @@ namespace portafolio.backend.API.Contexto
         public DbSet<Proyecto> Proyectos { get; set; }
         public DbSet<Conocimiento> Conocimientos { get; set; } = null!;
         public DbSet<Educacion> Educaciones { get; set; } = null!;
+        public DbSet<Empleo> Empleos { get; set; } = null!;
 
         public ContextoPortafolio(DbContextOptions options) : base(options)
         {
