@@ -85,7 +85,7 @@ Formación académica
 | Campo       | Descripción                       |
 | ----------- | --------------------------------- |
 | Id          | PK, Identity                      |
-| PerfilId    | FK → Perfil(Id), no nulo          |
+| UsuarioAdmnistradorId    | FK → UsuarioAdministrador(Id), no nulo          |
 | Institucion | Nombre de la institución, no nulo |
 | Titulo      | Título obtenido, no nulo          |
 | FechaInicio | Fecha de inicio, no nulo          |
@@ -98,7 +98,7 @@ Experiencia laboral
 | Campo       | Descripción                       |
 | ----------- | --------------------------------- |
 | Id          | PK, Identity                      |
-| PerfilId    | FK → Perfil(Id), no nulo          |
+| UsuarioAdmnistradorId    | FK → UsuarioAdministrador(Id), no nulo          |
 | Empresa     | Nombre de la empresa, no nulo     |
 | Cargo       | Puesto desempeñado, no nulo       |
 | FechaInicio | Fecha de inicio, no nulo          |
@@ -110,7 +110,7 @@ Redes sociales y canales de contacto
 | Campo      | Descripción                                  |
 | ---------- | -------------------------------------------- |
 | Id         | PK, Identity                                 |
-| PerfilId   | FK → Perfil(Id), no nulo                     |
+| UsuarioAdmnistradorId    | FK → UsuarioAdministrador(Id), no nulo          |
 | Plataforma | Nombre de la red (LinkedIn, GitHub), no nulo |
 | Url        | Enlace a perfil, no nulo                     |
 | IconUrl    | URL de icono/logo, opcional                  |
