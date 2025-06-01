@@ -20,6 +20,8 @@ builder.Services.AddScoped<HabilidadRepositorio>();
 builder.Services.AddScoped<HabilidadServicio>();
 builder.Services.AddScoped<ProyectoRepositorio>();
 builder.Services.AddScoped<ProyectoServicio>();
+builder.Services.AddScoped<ConocimientoRepositorio>();
+builder.Services.AddScoped<ConocimientoServicio>();
 
 // DbContext de EF core 
 builder.Services.AddDbContext<ContextoPortafolio>(options => options.UseSqlServer("name=DefaultConnection"));

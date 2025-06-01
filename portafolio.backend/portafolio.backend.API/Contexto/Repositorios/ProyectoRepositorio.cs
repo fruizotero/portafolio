@@ -16,6 +16,8 @@ namespace portafolio.backend.API.Contexto.Repositorios
         {
             return await _ctx.Proyectos
                 .Where(p => p.UsuarioAdministradorId == usuarioAdministradorId)
+                .Include(p=>p.Conocimientos)
+                .Include(p => p.Habilidades)
                 .OrderByDescending(p => p.Orden)
                 .ThenByDescending(p => p.UpdatedAt)
                 .ToListAsync();
@@ -24,13 +26,19 @@ namespace portafolio.backend.API.Contexto.Repositorios
         public async Task<Proyecto?> ObtenerPorId(int id, int usuarioAdministradorId)
         {
             return await _ctx.Proyectos
-                .FirstOrDefaultAsync(p => p.Id == id && p.UsuarioAdministradorId == usuarioAdministradorId);
+                .Where(p => p.Id == id && p.UsuarioAdministradorId == usuarioAdministradorId)
+                .Include(p => p.Conocimientos)
+                .Include(p => p.Habilidades)
+                .FirstOrDefaultAsync()
+                ;
         }
         
         public async Task<List<Proyecto>> ObtenerDestacados(int usuarioAdministradorId, int cantidad = 3)
         {
             return await _ctx.Proyectos
                 .Where(p => p.UsuarioAdministradorId == usuarioAdministradorId)
+                .Include(p => p.Conocimientos)
+                .Include(p => p.Habilidades)
                 .OrderByDescending(p => p.Orden)
                 .ThenByDescending(p => p.UpdatedAt)
                 .Take(cantidad)

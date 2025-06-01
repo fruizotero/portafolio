@@ -2,7 +2,9 @@
 
 namespace portafolio.backend.API.Controladores
 {
-    public class HabilidadController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class HabilidadController : ControllerBase
     {
         private readonly Servicios.HabilidadServicio _habilidadServicio;
 
