@@ -19,11 +19,11 @@ namespace portafolio.backend.API.Servicios
             _usuariosRepositorio = usuariosRepositorio;
         }
 
-        public async Task<ApiResponseDTO<IEnumerable<EmpleoResponseDTO>>> ObtenerPorUsuarioAsync(int usuarioAdministradorId)
+        public async Task<ApiResponseDTO<IEnumerable<EmpleoResponseDTO>>> ObtenerEmpleosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             try
             {
-                var usuario = await _usuariosRepositorio.ObtenerPorIdAsync(usuarioAdministradorId);
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<IEnumerable<EmpleoResponseDTO>>
@@ -34,7 +34,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var empleos = await _empleoRepositorio.ObtenerPorUsuarioAsync(usuarioAdministradorId);
+                var empleos = await _empleoRepositorio.ObtenerEmpleosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
 
                 if (empleos == null || !empleos.Any())
                 {
@@ -76,11 +76,11 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
-        public async Task<ApiResponseDTO<EmpleoResponseDTO>> ObtenerPorIdAsync(int id, int usuarioAdministradorId)
+        public async Task<ApiResponseDTO<EmpleoResponseDTO>> ObtenerEmpleoPorIdAsync(int id, int usuarioAdministradorId)
         {
             try
             {
-                var empleo = await _empleoRepositorio.ObtenerPorIdAsync(id, usuarioAdministradorId);
+                var empleo = await _empleoRepositorio.ObtenerEmpleoPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
 
                 if (empleo == null)
                 {

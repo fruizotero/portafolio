@@ -14,7 +14,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
         }
 
 
-        public async Task<bool> ExisteUsuarioAdministrador(string email)
+        public async Task<bool> ExisteUsuarioAdministradorPorEmailAsync(string email)
         {
             var usuarioEncontrado = await _contexto.UsuariosAdministradores.Where(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)).FirstOrDefaultAsync();
             return usuarioEncontrado != null;
@@ -28,7 +28,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
             return usuarioEncontrado;
         }
 
-        public async Task<UsuarioAdministrador> ObtenerPorIdAsync(int id)
+        public async Task<UsuarioAdministrador> ObtenerUsuarioAdministradorPorIdAsync(int id)
         {
             return await _contexto.UsuariosAdministradores.FindAsync(id);
         }

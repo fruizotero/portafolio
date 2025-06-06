@@ -18,12 +18,12 @@ namespace portafolio.backend.API.Servicios
             _usuariosRepositorio = usuariosRepositorio;
         }
 
-        public async Task<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>> ObtenerConocimientosPorUsuarioAsync(int usuarioId)
+        public async Task<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>> ObtenerConocimientosPorUsuarioAdministradorIdAsync(int usuarioId)
         {
             try
             {
                 // Verificar si el usuario existe
-                var usuario = await _usuariosRepositorio.ObtenerPorIdAsync(usuarioId);
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>
@@ -34,7 +34,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var conocimientos = await _conocimientoRepositorio.ObtenerConocimientosPorUsuarioAsync(usuarioId);
+                var conocimientos = await _conocimientoRepositorio.ObtenerConocimientosPorUsuarioAdministradorIdAsync(usuarioId);
 
                 if (conocimientos == null || !conocimientos.Any())
                 {
@@ -117,7 +117,7 @@ namespace portafolio.backend.API.Servicios
         {
             try
             {
-                var conocimientos = await _conocimientoRepositorio.ObtenerConocimientosAsync();
+                var conocimientos = await _conocimientoRepositorio.ObtenerTodosLosConocimientosAsync();
 
                 if (conocimientos == null || !conocimientos.Any())
                 {

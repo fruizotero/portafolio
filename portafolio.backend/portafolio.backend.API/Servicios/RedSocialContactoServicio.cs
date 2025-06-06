@@ -23,7 +23,7 @@ namespace portafolio.backend.API.Servicios
         {
             try
             {
-                var usuario = await _usuariosRepositorio.ObtenerPorIdAsync(usuarioAdministradorId);
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<IEnumerable<RedSocialContactoResponseDTO>>
@@ -79,7 +79,7 @@ namespace portafolio.backend.API.Servicios
             try
             {
                 // Verificar si el usuario existe
-                var usuario = await _usuariosRepositorio.ObtenerPorIdAsync(usuarioAdministradorId);
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<RedSocialContactoResponseDTO>

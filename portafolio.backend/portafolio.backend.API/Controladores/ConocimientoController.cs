@@ -19,7 +19,7 @@ namespace portafolio.backend.API.Controladores
         [HttpGet("usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
         {
-            var response = await _conocimientoServicio.ObtenerConocimientosPorUsuarioAsync(usuarioAdministradorId);
+            var response = await _conocimientoServicio.ObtenerConocimientosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
             if (!response.Exitoso)
             {
                 return StatusCode(response.CodigoEstado, response);

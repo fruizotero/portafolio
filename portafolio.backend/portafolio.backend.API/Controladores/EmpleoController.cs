@@ -20,7 +20,7 @@ namespace portafolio.backend.API.Controladores
         [HttpGet("usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<EmpleoResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
         {
-            var response = await _empleoServicio.ObtenerPorUsuarioAsync(usuarioAdministradorId);
+            var response = await _empleoServicio.ObtenerEmpleosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
             if (!response.Exitoso)
             {
                 return StatusCode(response.CodigoEstado, response);
@@ -31,7 +31,7 @@ namespace portafolio.backend.API.Controladores
         [HttpGet("{id}/usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<EmpleoResponseDTO>>> ObtenerPorId(int id, int usuarioAdministradorId)
         {
-            var response = await _empleoServicio.ObtenerPorIdAsync(id, usuarioAdministradorId);
+            var response = await _empleoServicio.ObtenerEmpleoPorIdAsync(id, usuarioAdministradorId);
             if (!response.Exitoso)
             {
                 return StatusCode(response.CodigoEstado, response);

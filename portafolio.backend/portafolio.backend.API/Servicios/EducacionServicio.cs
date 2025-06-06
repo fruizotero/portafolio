@@ -23,7 +23,7 @@ namespace portafolio.backend.API.Servicios
         {
             try
             {
-                var usuario = await _usuariosRepositorio.ObtenerPorIdAsync(usuarioAdministradorId);
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<IEnumerable<EducacionResponseDTO>>
@@ -34,7 +34,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var educaciones = await _educacionRepositorio.ObtenerPorUsuarioAsync(usuarioAdministradorId);
+                var educaciones = await _educacionRepositorio.ObtenerEducacionesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
 
                 if (educaciones == null || !educaciones.Any())
                 {
@@ -80,7 +80,7 @@ namespace portafolio.backend.API.Servicios
         {
             try
             {
-                var educacion = await _educacionRepositorio.ObtenerPorIdAsync(id, usuarioAdministradorId);
+                var educacion = await _educacionRepositorio.ObtenerEducacionPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
 
                 if (educacion == null)
                 {

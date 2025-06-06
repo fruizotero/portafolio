@@ -21,7 +21,7 @@ namespace portafolio.backend.API.Servicios
             try
             {
                 
-                var usuarioAdministrador = await _usuariosAdministradoresRepositorio.ObtenerPorIdAsync(usuarioAdministradorId);
+                var usuarioAdministrador = await _usuariosAdministradoresRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuarioAdministrador == null)
                 {
                     return new ApiResponseDTO<IEnumerable<HabilidadResponseDTO>>
@@ -37,9 +37,10 @@ namespace portafolio.backend.API.Servicios
                 {
                     return new ApiResponseDTO<IEnumerable<HabilidadResponseDTO>>
                     {
-                        Exitoso = false,
+                        Exitoso = true,
                         Mensaje = "No se encontraron habilidades para este usuario",
-                        CodigoEstado = 404
+                        CodigoEstado = 200,
+                        Datos= new List<HabilidadResponseDTO>()
                     };
                 }
 
@@ -80,9 +81,10 @@ namespace portafolio.backend.API.Servicios
                 {
                     return new ApiResponseDTO<IEnumerable<HabilidadResponseDTO>>
                     {
-                        Exitoso = false,
+                        Exitoso = true,
                         Mensaje = "No se encontraron habilidades actuales para este usuario",
-                        CodigoEstado = 404
+                        CodigoEstado = 200,
+                        Datos = new List<HabilidadResponseDTO>()
                     };
                 }
 

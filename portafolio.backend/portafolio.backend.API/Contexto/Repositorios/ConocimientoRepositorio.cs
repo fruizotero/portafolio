@@ -13,15 +13,15 @@ namespace portafolio.backend.API.Contexto.Repositorios
         }
 
         // Obtener conocimientos por id de usuario
-        public async Task<List<Conocimiento>> ObtenerConocimientosPorUsuarioAsync(int usuarioId)
+        public async Task<List<Conocimiento>> ObtenerConocimientosPorUsuarioAdministradorIdAsync(int UsuarioAdministradorId)
         {
             return await _ctx.Conocimientos
-                .Where(c => c.UsuarioAdministradorId == usuarioId)
+                .Where(c => c.UsuarioAdministradorId == UsuarioAdministradorId)
                 .ToListAsync();
         }
 
 
-        public async Task<List<Conocimiento>> ObtenerConocimientosAsync()
+        public async Task<List<Conocimiento>> ObtenerTodosLosConocimientosAsync()
         {
             return await _ctx.Conocimientos.ToListAsync();
         }

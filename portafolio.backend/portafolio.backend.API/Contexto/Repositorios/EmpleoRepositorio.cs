@@ -13,7 +13,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
             _ctx = ctx;
         }
 
-        public async Task<List<Empleo>> ObtenerPorUsuarioAsync(int usuarioAdministradorId)
+        public async Task<List<Empleo>> ObtenerEmpleosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             return await _ctx.Empleos
                 .Where(e => e.UsuarioAdministradorId == usuarioAdministradorId)
@@ -21,7 +21,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
                 .ToListAsync();
         }
 
-        public async Task<Empleo?> ObtenerPorIdAsync(int id, int usuarioAdministradorId)
+        public async Task<Empleo?> ObtenerEmpleoPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
         {
             return await _ctx.Empleos
                 .FirstOrDefaultAsync(e => e.Id == id && e.UsuarioAdministradorId == usuarioAdministradorId);

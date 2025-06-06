@@ -12,7 +12,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
             _ctx = ctx;
         }
         
-        public async Task<List<Proyecto>> ObtenerPorUsuario(int usuarioAdministradorId)
+        public async Task<List<Proyecto>> ObtenerProyectosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             return await _ctx.Proyectos
                 .Where(p => p.UsuarioAdministradorId == usuarioAdministradorId)
@@ -23,7 +23,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
                 .ToListAsync();
         }
         
-        public async Task<Proyecto?> ObtenerPorId(int id, int usuarioAdministradorId)
+        public async Task<Proyecto?> ObtenerProyectoPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
         {
             return await _ctx.Proyectos
                 .Where(p => p.Id == id && p.UsuarioAdministradorId == usuarioAdministradorId)
@@ -33,7 +33,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
                 ;
         }
         
-        public async Task<List<Proyecto>> ObtenerDestacados(int usuarioAdministradorId, int cantidad = 3)
+        public async Task<List<Proyecto>> ObtenerProyectosDestacadosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId, int cantidad = 3)
         {
             return await _ctx.Proyectos
                 .Where(p => p.UsuarioAdministradorId == usuarioAdministradorId)

@@ -13,7 +13,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
             _ctx = ctx;
         }
 
-        public async Task<List<Educacion>> ObtenerPorUsuarioAsync(int usuarioAdministradorId)
+        public async Task<List<Educacion>> ObtenerEducacionesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             return await _ctx.Educaciones
                 .Where(e => e.UsuarioAdministradorId == usuarioAdministradorId)
@@ -21,7 +21,7 @@ namespace portafolio.backend.API.Contexto.Repositorios
                 .ToListAsync();
         }
 
-        public async Task<Educacion?> ObtenerPorIdAsync(int id, int usuarioAdministradorId)
+        public async Task<Educacion?> ObtenerEducacionPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
         {
             return await _ctx.Educaciones
                 .FirstOrDefaultAsync(e => e.Id == id && e.UsuarioAdministradorId == usuarioAdministradorId);

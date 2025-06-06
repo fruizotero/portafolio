@@ -19,7 +19,7 @@ namespace portafolio.backend.API.Controladores
         [HttpGet("usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
         {
-            var response = await _proyectoServicio.ObtenerPorUsuarioAsync(usuarioAdministradorId);
+            var response = await _proyectoServicio.ObtenerProyectosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
             if (!response.Exitoso)
             {
                 return StatusCode(response.CodigoEstado, response);
@@ -30,7 +30,7 @@ namespace portafolio.backend.API.Controladores
         [HttpGet("{id}/usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<ProyectoResponseDTO>>> ObtenerPorId(int id, int usuarioAdministradorId)
         {
-            var response = await _proyectoServicio.ObtenerPorIdAsync(id, usuarioAdministradorId);
+            var response = await _proyectoServicio.ObtenerProyectoPorIdAsync(id, usuarioAdministradorId);
             if (!response.Exitoso)
             {
                 return StatusCode(response.CodigoEstado, response);
@@ -43,7 +43,7 @@ namespace portafolio.backend.API.Controladores
             int usuarioAdministradorId, 
             [FromQuery] int cantidad = 3)
         {
-            var response = await _proyectoServicio.ObtenerDestacadosAsync(usuarioAdministradorId, cantidad);
+            var response = await _proyectoServicio.ObtenerProyectosDestacadosPorUsuarioAdministradorIdAsync(usuarioAdministradorId, cantidad);
             if (!response.Exitoso)
             {
                 return StatusCode(response.CodigoEstado, response);

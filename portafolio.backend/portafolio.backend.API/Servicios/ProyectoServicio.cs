@@ -18,11 +18,11 @@ namespace portafolio.backend.API.Servicios
             _usuariosRepo = usuariosRepo;
         }
 
-        public async Task<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>> ObtenerPorUsuarioAsync(int usuarioAdministradorId)
+        public async Task<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>> ObtenerProyectosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             try
             {
-                var usuario = await _usuariosRepo.ObtenerPorIdAsync(usuarioAdministradorId);
+                var usuario = await _usuariosRepo.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>
@@ -33,7 +33,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
                 
-                var proyectos = await _proyectoRepositorio.ObtenerPorUsuario(usuarioAdministradorId);
+                var proyectos = await _proyectoRepositorio.ObtenerProyectosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
                 
                 if (proyectos == null || !proyectos.Any())
                 {
@@ -89,11 +89,11 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
-        public async Task<ApiResponseDTO<ProyectoResponseDTO>> ObtenerPorIdAsync(int id, int usuarioAdministradorId)
+        public async Task<ApiResponseDTO<ProyectoResponseDTO>> ObtenerProyectoPorIdAsync(int id, int usuarioAdministradorId)
         {
             try
             {
-                var proyecto = await _proyectoRepositorio.ObtenerPorId(id, usuarioAdministradorId);
+                var proyecto = await _proyectoRepositorio.ObtenerProyectoPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
                 
                 if (proyecto == null)
                 {
@@ -148,12 +148,12 @@ namespace portafolio.backend.API.Servicios
             }
         }
         
-        public async Task<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>> ObtenerDestacadosAsync(int usuarioAdministradorId, int cantidad = 3)
+        public async Task<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>> ObtenerProyectosDestacadosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId, int cantidad = 3)
         {
             try
             {
                 // Verificar si el usuario administrador existe
-                var usuario = await _usuariosRepo.ObtenerPorIdAsync(usuarioAdministradorId);
+                var usuario = await _usuariosRepo.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>
@@ -164,7 +164,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var proyectos = await _proyectoRepositorio.ObtenerDestacados(usuarioAdministradorId, cantidad);
+                var proyectos = await _proyectoRepositorio.ObtenerProyectosDestacadosPorUsuarioAdministradorIdAsync(usuarioAdministradorId, cantidad);
 
                 if (proyectos == null || !proyectos.Any())
                 {
