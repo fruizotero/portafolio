@@ -7,7 +7,7 @@ namespace portafolio.backend.API.Dominio.Entidades
     {
 
         public int Id { get; set; }
-        public required UsuarioAdministrador UsuarioAdministrador { get; set; } 
+        public  UsuarioAdministrador UsuarioAdministrador { get; set; } 
         public int UsuarioAdministradorId { get; set; } 
         public string Nombre { get; set; } 
         public string Apellidos { get; set; } 

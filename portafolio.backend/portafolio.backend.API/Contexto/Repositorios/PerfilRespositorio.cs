@@ -17,11 +17,12 @@ namespace portafolio.backend.API.Contexto.Repositorios
 
             return perfilEncontrado;
         }
-        public async Task AñadirPerfilAsync(Perfil perfil)
+        public async Task CrearPerfilAsync(Perfil perfil)
         {
             await _context.Perfiles.AddAsync(perfil);
             await _context.SaveChangesAsync();
         }
+
         public async Task ActualizarPerfilAsync(Perfil perfil)
         {
             _context.Perfiles.Update(perfil);
