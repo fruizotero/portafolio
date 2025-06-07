@@ -22,7 +22,7 @@
           <RouterLink to="/panel/proyectos" class="menu-item">Proyectos</RouterLink>
         </li>
         <li>
-          <RouterLink to="/panel/educaciones" class="menu-item">Educaciones</RouterLink>
+          <RouterLink to="/panel/educaciones" class="menu-item">Educación</RouterLink>
         </li>
         <li>
           <RouterLink to="/panel/conocimientos" class="menu-item">Conocimientos</RouterLink>

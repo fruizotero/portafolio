@@ -2,7 +2,7 @@
 <template>
   <div
     v-if="isVisible"
-    :class="['alert', success ? 'alert-success' : 'alert-error', 'absolute top-4 right-4 z-50']"
+    :class="['alert', success ? 'alert-success' : 'alert-error', 'sticky top-4 z-50']"
     role="alert"
   >
     <svg
