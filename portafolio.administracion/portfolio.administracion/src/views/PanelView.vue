@@ -6,7 +6,7 @@
     <section class="drawer-content p-8">
       <!-- Page content here -->
       <router-view />
-      <label for="my-drawer-2" class="btn btn-primary drawer-button fixed left-4 top-4 md:hidden">
+      <label for="my-drawer-2" class="btn btn-primary drawer-button absolute  left-4 top-4 md:hidden">
         Open drawer
       </label>
     </section>
