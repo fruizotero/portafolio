@@ -17,6 +17,8 @@ const props = defineProps({
   title:      { type: String,  required: true },
   items:      { type: Array,   required: true },
   fields:     { type: Object,  required: true },
+  onEdit:    { type: Function, required: true },
+  onDelete:  { type: Function, required: true },
 })
 
 </script>
@@ -37,6 +39,8 @@ const props = defineProps({
       <ListComponentElement
         :item="item"
         :fields="fields"
+        :onEdit="onEdit"
+        :onDelete="onDelete"
       />
     </li>
   </ul>

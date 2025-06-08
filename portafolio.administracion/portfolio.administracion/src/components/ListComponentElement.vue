@@ -1,10 +1,10 @@
 <script setup>
-import { defineProps, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { PencilIcon, TrashIcon } from '@heroicons/vue/24/solid'
+
 
 /**
- * @prop {Object} item    — objeto con los datos
- * @prop {Object} fields  — configuración de campos:
+ * @prop {Object} item          — objeto con los datos
+ * @prop {Object} fields        — configuración de campos:
  *   {
  *     id: string,
  *     title: string,
@@ -12,28 +12,19 @@ import { RouterLink } from 'vue-router'
  *     description?: string,
  *     image?: string,
  *     fechainicio?: string,
- *     fechafin?: string,
- *     enableLink?: boolean,    // por defecto true
- *     routeName?: string,      // nombre de la ruta
- *     idParam?: string         // nombre del parámetro en la ruta (por defecto 'id')
+ *     fechafin?: string
  *   }
+ * @prop {Function} onEdit     — función callback para editar (recibe item)
+ * @prop {Function} onDelete   — función callback para eliminar (recibe item)
  */
 const props = defineProps({
-  item:   { type: Object, required: true },
-  fields: { type: Object, required: true },
+  item:      { type: Object,   required: true },
+  fields:    { type: Object,   required: true },
+  onEdit:    { type: Function, required: true },
+  onDelete:  { type: Function, required: true }
 })
 
-// Determina si debe envolverse en RouterLink
-const enableLink = computed(() => props.fields.enableLink !== false && !!props.fields.routeName)
-
-// Construye la ruta si corresponde
-const linkTo = computed(() => {
-  if (!enableLink.value) return null
-  const paramKey = props.fields.idParam || 'id'
-  return { name: props.fields.routeName, params: { [paramKey]: props.item[props.fields.id] } }
-})
-
-// Formatea fechas
+// Formatea fechas ISO a locale
 function formatDate(iso) {
   if (!iso) return ''
   return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
@@ -41,18 +32,7 @@ function formatDate(iso) {
 </script>
 
 <template>
-  <!-- Usa RouterLink si enableLink y linkTo, sino un div -->
-  <component
-    :is="enableLink ? RouterLink : 'div'"
-    v-bind="enableLink ? { to: linkTo } : {}"
-    class="relative list-row flex items-start p-4 hover:bg-base-200 transition cursor-pointer rounded-lg"
-  >
-    <!-- Fechas en esquina superior derecha -->
-    <div v-if="fields.fechainicio || fields.fechafin" class="absolute top-2 right-2 text-xs opacity-60 text-right">
-      <div v-if="fields.fechainicio">{{ formatDate(item[fields.fechainicio]) }}</div>
-      <div v-if="fields.fechafin">{{ formatDate(item[fields.fechafin]) }}</div>
-    </div>
-
+  <div class="relative list-row flex items-start p-4 bg-base-100 rounded-lg shadow-sm">
     <!-- Imagen opcional -->
     <div v-if="fields.image && item[fields.image]" class="flex-shrink-0 mt-1">
       <img :src="item[fields.image]" alt="" class="w-10 h-10 rounded-full object-cover" />
@@ -60,13 +40,44 @@ function formatDate(iso) {
 
     <!-- Contenido textual -->
     <div class="ml-4 flex-1">
-      <div class="font-medium">{{ item[fields.title] }}</div>
-      <div v-if="fields.subtitle" class="text-xs uppercase font-semibold opacity-60">
-        {{ item[fields.subtitle] }}
+      <div class="font-medium text-base">{{ item[fields.title] }}</div>
+      <!-- Subtítulo y fechas en línea -->
+      <div v-if="fields.subtitle || fields.fechainicio || fields.fechafin"
+           class="text-xs uppercase font-semibold opacity-60 flex flex-wrap items-center space-x-2">
+        <span v-if="fields.subtitle">{{ item[fields.subtitle] }}</span>
       </div>
-      <p v-if="fields.description" class="mt-2 text-xs list-col-wrap">
+      <span v-if="fields.fechainicio || fields.fechafin" class="text-xs text-gray-500 uppercase font-semibold">
+        desde {{ formatDate(item[fields.fechainicio]) }} hasta {{ formatDate(item[fields.fechafin]) }}
+      </span>
+      <p v-if="fields.description" class="mt-2 text-sm text-gray-600">
         {{ item[fields.description] }}
       </p>
     </div>
-  </component>
+
+    <!-- Botones Editar y Eliminar -->
+   <div class="absolute top-2 right-2 flex space-x-2">
+     <div class="tooltip" data-tip="Editar">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline btn-primary flex items-center space-x-1"
+          @click="onEdit(item)"
+        >
+          <PencilIcon class="h-4 w-4 red-500" />
+
+        </button>
+
+      </div>
+      <div class="tooltip" data-tip="Eliminar">
+
+        <button
+          type="button"
+          class="btn btn-sm btn-outline btn-error flex items-center space-x-1"
+          @click="onDelete(item)"
+        >
+          <TrashIcon class="h-4 w-4" />
+
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
