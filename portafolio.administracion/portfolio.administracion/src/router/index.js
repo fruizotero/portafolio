@@ -29,6 +29,14 @@ const router = createRouter({
           name: 'proyectos',
           component: () => import('../views/panel/ProyectosView.vue'),
           meta: { requiresAuth: true },
+
+        },
+
+        {
+          path: 'proyectos/:projectId',
+          name: 'detalle-proyecto',
+          component: () => import('../views/DetalleProyecto.vue'),
+          meta: { requiresAuth: true },
         },
         {
           path: 'conocimientos',
