@@ -17,10 +17,8 @@ const props = defineProps({
   title:      { type: String,  required: true },
   items:      { type: Array,   required: true },
   fields:     { type: Object,  required: true },
-  routeName:  { type: String,  required: true },
-  idParam:    { type: String,  default: 'id' },
 })
-console.log(props.items);
+
 </script>
 
 <template>
@@ -39,8 +37,6 @@ console.log(props.items);
       <ListComponentElement
         :item="item"
         :fields="fields"
-        :route-name="routeName"
-        :id-param="idParam"
       />
     </li>
   </ul>
