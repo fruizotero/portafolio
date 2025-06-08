@@ -4,13 +4,17 @@
     :items="proyectos"
     :fields="{
       id: 'id',
-      image: 'imagenDesktopUrl',
       title: 'titulo',
-      subtitle: 'titulo',
-      description: 'descripcion'
+      description: 'descripcion',
+      image: 'imagenDesktopUrl',
+      fechainicio: 'fechaInicio',
+      fechafin: 'fechaFin',
+      enableLink: true,
+      routeName: 'detalle-proyecto',
+      idParam: 'projectId'
     }"
-    route-name="detalle-proyecto"
-    id-param="projectId"
+    :onEdit="handleEdit"
+    :onDelete="handleDelete"
   />
 </template>
 
@@ -18,8 +22,10 @@
 import ListComponent from '@/components/ListComponent.vue'
 import { useGet } from '@/comporsables/useGet'
 import { ref, onMounted } from 'vue'
-
+import { useRouter } from 'vue-router'
+// Componente para mostrar la lista de proyectos
 const proyectos = ref([])
+const router = useRouter()
 
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
 
@@ -34,4 +40,19 @@ onMounted(async () => {
     console.error('Error al cargar los proyectos')
   }
 })
+
+function handleEdit(item) {
+  // Lógica para editar el proyecto
+
+  // Aquí podrías redirigir a una página de edición o abrir un modal
+router.push({
+    name: 'detalle-proyecto',
+    params: { projectId: item.id }
+  })
+}
+
+function handleDelete(item) {
+  // Lógica para eliminar el proyecto
+  console.log('Eliminar proyecto:', item)
+}
 </script>
