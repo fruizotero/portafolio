@@ -7,8 +7,6 @@
       title: 'titulo',
       description: 'descripcion',
       image: 'imagenDesktopUrl',
-      fechainicio: 'fechaInicio',
-      fechafin: 'fechaFin',
       enableLink: true,
       routeName: 'detalle-proyecto',
       idParam: 'projectId'
