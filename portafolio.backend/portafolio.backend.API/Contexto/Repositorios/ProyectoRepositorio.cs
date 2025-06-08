@@ -44,5 +44,23 @@ namespace portafolio.backend.API.Contexto.Repositorios
                 .Take(cantidad)
                 .ToListAsync();
         }
+
+        // Método para insertar un nuevo proyecto
+        public async Task<Proyecto> InsertarProyectoAsync(Proyecto proyecto)
+        {
+            await _ctx.Proyectos.AddAsync(proyecto);
+            await _ctx.SaveChangesAsync();
+            return proyecto;
+        }
+
+        // Método para cargar un proyecto completo con sus relaciones
+        public async Task<Proyecto?> ObtenerProyectoCompletoConRelacionesPorIdAsync(int id)
+        {
+            return await _ctx.Proyectos
+                .Where(p => p.Id == id)
+                .Include(p => p.Conocimientos)
+                .Include(p => p.Habilidades)
+                .FirstOrDefaultAsync();
+        }
     }
 }

@@ -10,45 +10,39 @@ namespace portafolio.backend.API.Controladores
     public class ProyectoController : ControllerBase
     {
         private readonly ProyectoServicio _proyectoServicio;
-        
+
         public ProyectoController(ProyectoServicio proyectoServicio)
         {
             _proyectoServicio = proyectoServicio ?? throw new ArgumentNullException(nameof(proyectoServicio));
         }
 
-        [HttpGet("usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
+        [HttpGet("{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>>> ObtenerProyectosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _proyectoServicio.ObtenerProyectosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            return StatusCode(response.CodigoEstado, response);
         }
 
-        [HttpGet("{id}/usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<ProyectoResponseDTO>>> ObtenerPorId(int id, int usuarioAdministradorId)
-        {
-            var response = await _proyectoServicio.ObtenerProyectoPorIdAsync(id, usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
-        }
-        
-        [HttpGet("destacados/usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>>> ObtenerDestacados(
-            int usuarioAdministradorId, 
-            [FromQuery] int cantidad = 3)
+        [HttpGet("{usuarioAdministradorId}/destacados/{cantidad=3}")]
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<ProyectoResponseDTO>>>> ObtenerProyectosDestacadosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId, int cantidad = 3)
         {
             var response = await _proyectoServicio.ObtenerProyectosDestacadosPorUsuarioAdministradorIdAsync(usuarioAdministradorId, cantidad);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            return StatusCode(response.CodigoEstado, response);
+        }
+
+        [HttpGet("{usuarioAdministradorId}/proyecto/{id}")]
+        public async Task<ActionResult<ApiResponseDTO<ProyectoResponseDTO>>> ObtenerProyectoPorIdAsync(int usuarioAdministradorId, int id)
+        {
+            var response = await _proyectoServicio.ObtenerProyectoPorIdAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
+
+        [HttpPost("{usuarioAdministradorId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<ApiResponseDTO<ProyectoResponseDTO>>> CrearProyecto(int usuarioAdministradorId, [FromForm] ProyectoRequestDTO proyectoRequest)
+        {
+            var response = await _proyectoServicio.CrearProyectoAsync(usuarioAdministradorId, proyectoRequest);
+            return StatusCode(response.CodigoEstado, response);
         }
     }
 }

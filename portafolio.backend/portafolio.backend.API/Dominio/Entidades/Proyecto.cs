@@ -14,7 +14,7 @@ namespace portafolio.backend.API.Dominio.Entidades
         public string? RepositorioUrl { get; set; }
         public string? LiveUrl { get; set; }
         public int Orden { get; set; } = 0;
-        public virtual required UsuarioAdministrador UsuarioAdministrador { get; set; }
+        public   UsuarioAdministrador UsuarioAdministrador { get; set; }
         public int UsuarioAdministradorId { get; set; }
 
         public ICollection<Habilidad> Habilidades { get; set; } = new List<Habilidad>();
