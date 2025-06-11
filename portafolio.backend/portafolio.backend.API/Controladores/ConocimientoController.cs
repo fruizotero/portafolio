@@ -17,14 +17,17 @@ namespace portafolio.backend.API.Controladores
         }
 
         [HttpGet("usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>>> ObtenerConocimientosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _conocimientoServicio.ObtenerConocimientosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            return StatusCode(response.CodigoEstado, response);
+        }
+
+        [HttpPost("{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<ConocimientoResponseDTO>>> CrearConocimiento(int usuarioAdministradorId, [FromBody] ConocimientoRequestDTO conocimientoRequest)
+        {
+            var response = await _conocimientoServicio.CrearConocimientoAsync(usuarioAdministradorId, conocimientoRequest);
+            return StatusCode(response.CodigoEstado, response);
         }
 
         [HttpGet("{id}")]

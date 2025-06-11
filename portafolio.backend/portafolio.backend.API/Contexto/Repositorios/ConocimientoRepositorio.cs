@@ -13,13 +13,12 @@ namespace portafolio.backend.API.Contexto.Repositorios
         }
 
         // Obtener conocimientos por id de usuario
-        public async Task<List<Conocimiento>> ObtenerConocimientosPorUsuarioAdministradorIdAsync(int UsuarioAdministradorId)
+        public async Task<List<Conocimiento>> ObtenerConocimientosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             return await _ctx.Conocimientos
-                .Where(c => c.UsuarioAdministradorId == UsuarioAdministradorId)
+                .Where(c => c.UsuarioAdministradorId == usuarioAdministradorId)
                 .ToListAsync();
         }
-
 
         public async Task<List<Conocimiento>> ObtenerTodosLosConocimientosAsync()
         {
@@ -30,6 +29,20 @@ namespace portafolio.backend.API.Contexto.Repositorios
         {
             return await _ctx.Conocimientos
                             .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<Conocimiento?> ObtenerConocimientoPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
+        {
+            return await _ctx.Conocimientos
+                .FirstOrDefaultAsync(c => c.Id == id && c.UsuarioAdministradorId == usuarioAdministradorId);
+        }
+
+        // Método nuevo para insertar un conocimiento
+        public async Task<Conocimiento> InsertarConocimientoAsync(Conocimiento conocimiento)
+        {
+            await _ctx.Conocimientos.AddAsync(conocimiento);
+            await _ctx.SaveChangesAsync();
+            return conocimiento;
         }
     }
 }

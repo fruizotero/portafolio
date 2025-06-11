@@ -59,6 +59,7 @@ contraseña: 1234
 - axios
 - pinya
 - tiptap
+- heroicons
 
 ### instalación tailwind
 https://dev.to/osalumense/install-tailwind-css-v4-in-a-vue-3-vite-project-319g

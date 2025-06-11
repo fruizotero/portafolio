@@ -18,12 +18,12 @@ namespace portafolio.backend.API.Servicios
             _usuariosRepositorio = usuariosRepositorio;
         }
 
-        public async Task<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>> ObtenerConocimientosPorUsuarioAdministradorIdAsync(int usuarioId)
+        public async Task<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>> ObtenerConocimientosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             try
             {
                 // Verificar si el usuario existe
-                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioId);
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
                     return new ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>
@@ -34,7 +34,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var conocimientos = await _conocimientoRepositorio.ObtenerConocimientosPorUsuarioAdministradorIdAsync(usuarioId);
+                var conocimientos = await _conocimientoRepositorio.ObtenerConocimientosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
 
                 if (conocimientos == null || !conocimientos.Any())
                 {
@@ -47,11 +47,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var conocimientosDTO = conocimientos.Select(c => new ConocimientoResponseDTO
-                {
-                    Id = c.Id,
-                    Nombre = c.Nombre
-                });
+                var conocimientosDTO = conocimientos.Select(MapearConocimientoADTO);
 
                 return new ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>
                 {
@@ -153,6 +149,89 @@ namespace portafolio.backend.API.Servicios
                     CodigoEstado = 500
                 };
             }
+        }
+
+        // Método nuevo para crear conocimiento
+        public async Task<ApiResponseDTO<ConocimientoResponseDTO>> CrearConocimientoAsync(int usuarioAdministradorId, ConocimientoRequestDTO conocimientoRequest)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<ConocimientoResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Validar que el nombre no esté vacío
+                if (string.IsNullOrWhiteSpace(conocimientoRequest.Nombre))
+                {
+                    return new ApiResponseDTO<ConocimientoResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "El nombre del conocimiento es obligatorio",
+                        CodigoEstado = 400
+                    };
+                }
+
+                // Verificar si ya existe un conocimiento con el mismo nombre para este usuario
+                var conocimientosExistentes = await _conocimientoRepositorio.ObtenerConocimientosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
+                if (conocimientosExistentes.Any(c => c.Nombre.Trim().Equals(conocimientoRequest.Nombre.Trim(), StringComparison.OrdinalIgnoreCase)))
+                {
+                    return new ApiResponseDTO<ConocimientoResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Ya existe un conocimiento con este nombre",
+                        CodigoEstado = 409 // Conflict
+                    };
+                }
+
+                // Crear nuevo conocimiento
+                var nuevoConocimiento = new Conocimiento
+                {
+                    Nombre = conocimientoRequest.Nombre.Trim(),
+                    UsuarioAdministradorId = usuarioAdministradorId,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                // Guardar en base de datos
+                var conocimientoCreado = await _conocimientoRepositorio.InsertarConocimientoAsync(nuevoConocimiento);
+
+                // Mapear a DTO
+                var conocimientoDTO = MapearConocimientoADTO(conocimientoCreado);
+
+                return new ApiResponseDTO<ConocimientoResponseDTO>
+                {
+                    Exitoso = true,
+                    Mensaje = "Conocimiento creado correctamente",
+                    Datos = conocimientoDTO,
+                    CodigoEstado = 201 // Created
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<ConocimientoResponseDTO>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al crear conocimiento: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
+        private ConocimientoResponseDTO MapearConocimientoADTO(Conocimiento conocimiento)
+        {
+            return new ConocimientoResponseDTO
+            {
+                Id = conocimiento.Id,
+                Nombre = conocimiento.Nombre
+            };
         }
     }
 }
