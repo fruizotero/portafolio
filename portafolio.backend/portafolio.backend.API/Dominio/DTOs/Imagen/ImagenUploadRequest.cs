@@ -5,7 +5,7 @@ namespace portafolio.backend.API.Dominio.DTOs.Imagen
     public class ImagenUploadRequest
     {
         private static readonly string[] AllowedContentTypes =
-            new[] { "image/jpeg", "image/png", "image/gif" };
+            new[] { "image/jpeg", "image/png", "image/gif", "image/svg+xml" };
 
         private const long MaxFileSizeBytes = 10 * 1024 * 1024; // 5 MB
 
@@ -33,9 +33,9 @@ namespace portafolio.backend.API.Dominio.DTOs.Imagen
                     nameof(Image));
 
             var extension = Path.GetExtension(Image.FileName).ToLowerInvariant();
-            if (extension != ".jpg" && extension != ".jpeg" && extension != ".png" && extension != ".gif")
+            if (extension != ".jpg" && extension != ".jpeg" && extension != ".png" && extension != ".gif" && extension != ".svg")
                 throw new ArgumentException(
-                    $"Extensión de archivo no permitida: {extension}. Debe ser .jpg, .jpeg, .png o .gif.",
+                    $"Extensión de archivo no permitida: {extension}. Debe ser .jpg, .jpeg, .png, .gif o .svg .",
                     nameof(Image));
         }
     }

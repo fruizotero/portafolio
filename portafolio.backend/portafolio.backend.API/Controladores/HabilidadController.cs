@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using portafolio.backend.API.Dominio.DTOs;
+using portafolio.backend.API.Dominio.DTOs.Habilidad;
+using portafolio.backend.API.Servicios;
 
 namespace portafolio.backend.API.Controladores
 {
@@ -6,33 +9,33 @@ namespace portafolio.backend.API.Controladores
     [Route("[controller]")]
     public class HabilidadController : ControllerBase
     {
-        private readonly Servicios.HabilidadServicio _habilidadServicio;
+        private readonly HabilidadServicio _habilidadServicio;
 
-        public HabilidadController(Servicios.HabilidadServicio habilidadServicio)
+        public HabilidadController(HabilidadServicio habilidadServicio)
         {
             _habilidadServicio = habilidadServicio ?? throw new ArgumentNullException(nameof(habilidadServicio));
         }
 
         [HttpGet("{usuarioAdministradorId}")]
-        public async Task<IActionResult> ObtenerHabilidadesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<HabilidadResponseDTO>>>> ObtenerHabilidadesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _habilidadServicio.ObtenerHabilidadesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            return StatusCode(response.CodigoEstado, response);
         }
 
         [HttpGet("{usuarioAdministradorId}/actuales")]
-        public async Task<IActionResult> ObtenerHabilidadesActualesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<HabilidadResponseDTO>>>> ObtenerHabilidadesActualesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _habilidadServicio.ObtenerHabilidadesActualesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            return StatusCode(response.CodigoEstado, response);
+        }
+
+        [HttpPost("{usuarioAdministradorId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<ApiResponseDTO<HabilidadResponseDTO>>> CrearHabilidad(int usuarioAdministradorId, [FromForm] HabilidadRequestDTO habilidadRequest)
+        {
+            var response = await _habilidadServicio.CrearHabilidadAsync(usuarioAdministradorId, habilidadRequest);
+            return StatusCode(response.CodigoEstado, response);
         }
     }
 }

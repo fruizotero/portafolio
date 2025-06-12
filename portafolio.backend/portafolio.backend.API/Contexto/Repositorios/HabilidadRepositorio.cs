@@ -26,6 +26,12 @@ namespace portafolio.backend.API.Contexto.Repositorios
                 .ToListAsync();
         }
 
-       
+        // Método para insertar una nueva habilidad
+        public async Task<Habilidad> InsertarHabilidadAsync(Habilidad habilidad)
+        {
+            await _context.Habilidades.AddAsync(habilidad);
+            await _context.SaveChangesAsync();
+            return habilidad;
+        }
     }
 }
