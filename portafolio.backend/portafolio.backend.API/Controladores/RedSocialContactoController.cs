@@ -10,33 +10,26 @@ namespace portafolio.backend.API.Controladores
     [Route("[controller]")]
     public class RedSocialContactoController : ControllerBase
     {
-        private readonly RedSocialContactoServicio _redSocialContactoServicio;
+        private readonly RedSocialContactoServicio _redSocialServicio;
 
-        public RedSocialContactoController(RedSocialContactoServicio redSocialContactoServicio)
+        public RedSocialContactoController(RedSocialContactoServicio redSocialServicio)
         {
-            _redSocialContactoServicio = redSocialContactoServicio ?? throw new ArgumentNullException(nameof(redSocialContactoServicio));
+            _redSocialServicio = redSocialServicio ?? throw new ArgumentNullException(nameof(redSocialServicio));
         }
 
-        [HttpGet("usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<IEnumerable<RedSocialContactoResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
+        [HttpGet("{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<RedSocialContactoResponseDTO>>>> ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
-            var response = await _redSocialContactoServicio.ObtenerPorUsuarioAsync(usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            var response = await _redSocialServicio.ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
         }
 
-        [HttpGet("{id}/usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<RedSocialContactoResponseDTO>>> ObtenerPorId(int id, int usuarioAdministradorId)
+        [HttpPost("{usuarioAdministradorId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<ApiResponseDTO<RedSocialContactoResponseDTO>>> CrearRedSocialContacto(int usuarioAdministradorId, [FromForm] RedSocialContactoRequestDTO redSocialRequest)
         {
-            var response = await _redSocialContactoServicio.ObtenerPorIdAsync(id, usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            var response = await _redSocialServicio.CrearRedSocialContactoAsync(usuarioAdministradorId, redSocialRequest);
+            return StatusCode(response.CodigoEstado, response);
         }
     }
 }

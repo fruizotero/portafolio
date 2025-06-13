@@ -13,18 +13,25 @@ namespace portafolio.backend.API.Contexto.Repositorios
             _ctx = ctx;
         }
 
-        public async Task<List<RedSocialContacto>> ObtenerPorUsuarioAsync(int usuarioAdministradorId)
+        public async Task<List<RedSocialContacto>> ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             return await _ctx.RedesSocialesContacto
                 .Where(r => r.UsuarioAdministradorId == usuarioAdministradorId)
-                .OrderBy(r => r.Plataforma)
                 .ToListAsync();
         }
 
-        public async Task<RedSocialContacto?> ObtenerPorIdAsync(int id, int usuarioAdministradorId)
+        public async Task<RedSocialContacto?> ObtenerRedSocialPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
         {
             return await _ctx.RedesSocialesContacto
                 .FirstOrDefaultAsync(r => r.Id == id && r.UsuarioAdministradorId == usuarioAdministradorId);
+        }
+
+        // Método para insertar una nueva red social
+        public async Task<RedSocialContacto> InsertarRedSocialContactoAsync(RedSocialContacto redSocial)
+        {
+            await _ctx.RedesSocialesContacto.AddAsync(redSocial);
+            await _ctx.SaveChangesAsync();
+            return redSocial;
         }
     }
 }

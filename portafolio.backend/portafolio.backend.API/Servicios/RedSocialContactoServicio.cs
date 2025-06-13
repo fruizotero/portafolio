@@ -1,28 +1,34 @@
 // Servicios/RedSocialContactoServicio.cs
 using portafolio.backend.API.Contexto.Repositorios;
 using portafolio.backend.API.Dominio.DTOs;
+using portafolio.backend.API.Dominio.DTOs.Imagen;
 using portafolio.backend.API.Dominio.DTOs.RedSocialContacto;
 using portafolio.backend.API.Dominio.Entidades;
+using portafolio.backend.API.Interfaces;
 
 namespace portafolio.backend.API.Servicios
 {
     public class RedSocialContactoServicio
     {
-        private readonly RedSocialContactoRepositorio _redSocialContactoRepositorio;
+        private readonly RedSocialContactoRepositorio _redSocialRepositorio;
         private readonly UsuariosAdministradoresRepositorio _usuariosRepositorio;
+        private readonly ServicioImagenes _servicioImagenes;
 
         public RedSocialContactoServicio(
-            RedSocialContactoRepositorio redSocialContactoRepositorio,
-            UsuariosAdministradoresRepositorio usuariosRepositorio)
+            RedSocialContactoRepositorio redSocialRepositorio,
+            UsuariosAdministradoresRepositorio usuariosRepositorio,
+            ServicioImagenes servicioImagenes)
         {
-            _redSocialContactoRepositorio = redSocialContactoRepositorio;
+            _redSocialRepositorio = redSocialRepositorio;
             _usuariosRepositorio = usuariosRepositorio;
+            _servicioImagenes = servicioImagenes;
         }
 
-        public async Task<ApiResponseDTO<IEnumerable<RedSocialContactoResponseDTO>>> ObtenerPorUsuarioAsync(int usuarioAdministradorId)
+        public async Task<ApiResponseDTO<IEnumerable<RedSocialContactoResponseDTO>>> ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             try
             {
+                // Verificar si el usuario existe
                 var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
@@ -34,7 +40,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var redesSociales = await _redSocialContactoRepositorio.ObtenerPorUsuarioAsync(usuarioAdministradorId);
+                var redesSociales = await _redSocialRepositorio.ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
 
                 if (redesSociales == null || !redesSociales.Any())
                 {
@@ -47,13 +53,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var redesSocialesDTO = redesSociales.Select(r => new RedSocialContactoResponseDTO
-                {
-                    Id = r.Id,
-                    Plataforma = r.Plataforma,
-                    Url = r.Url,
-                    IconUrl = r.IconUrl
-                });
+                var redesSocialesDTO = redesSociales.Select(MapearRedSocialADTO);
 
                 return new ApiResponseDTO<IEnumerable<RedSocialContactoResponseDTO>>
                 {
@@ -74,7 +74,8 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
-        public async Task<ApiResponseDTO<RedSocialContactoResponseDTO>> ObtenerPorIdAsync(int id, int usuarioAdministradorId)
+        // Método para crear una nueva red social de contacto
+        public async Task<ApiResponseDTO<RedSocialContactoResponseDTO>> CrearRedSocialContactoAsync(int usuarioAdministradorId, RedSocialContactoRequestDTO redSocialRequest)
         {
             try
             {
@@ -90,32 +91,98 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var redSocial = await _redSocialContactoRepositorio.ObtenerPorIdAsync(id, usuarioAdministradorId);
-
-                if (redSocial == null)
+                // Validar campos obligatorios
+                if (string.IsNullOrWhiteSpace(redSocialRequest.Plataforma))
                 {
                     return new ApiResponseDTO<RedSocialContactoResponseDTO>
                     {
                         Exitoso = false,
-                        Mensaje = "Red social no encontrada",
-                        CodigoEstado = 404
+                        Mensaje = "El nombre de la plataforma es obligatorio",
+                        CodigoEstado = 400
                     };
                 }
 
-                var redSocialDTO = new RedSocialContactoResponseDTO
+                if (string.IsNullOrWhiteSpace(redSocialRequest.Url))
                 {
-                    Id = redSocial.Id,
-                    Plataforma = redSocial.Plataforma,
-                    Url = redSocial.Url,
-                    IconUrl = redSocial.IconUrl
+                    return new ApiResponseDTO<RedSocialContactoResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "La URL es obligatoria",
+                        CodigoEstado = 400
+                    };
+                }
+
+                // Verificar si la URL es válida
+                if (!Uri.TryCreate(redSocialRequest.Url, UriKind.Absolute, out _))
+                {
+                    return new ApiResponseDTO<RedSocialContactoResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "La URL proporcionada no es válida",
+                        CodigoEstado = 400
+                    };
+                }
+
+                // Verificar si ya existe una red social con la misma plataforma para este usuario
+                var redesSocialesExistentes = await _redSocialRepositorio.ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
+                if (redesSocialesExistentes.Any(r => r.Plataforma.Trim().Equals(redSocialRequest.Plataforma.Trim(), StringComparison.OrdinalIgnoreCase)))
+                {
+                    return new ApiResponseDTO<RedSocialContactoResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Ya existe una red social con esta plataforma",
+                        CodigoEstado = 409 // Conflict
+                    };
+                }
+
+                // Subir icono si se proporcionó
+                string? iconUrl = null;
+                if (redSocialRequest.Icono != null)
+                {
+                    try
+                    {
+                        var iconoResponse = await _servicioImagenes.SubirImagenAsync(
+                            new ImagenUploadRequest(redSocialRequest.Icono));
+                        
+                        if (iconoResponse != null)
+                        {
+                            iconUrl = iconoResponse.Url;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return new ApiResponseDTO<RedSocialContactoResponseDTO>
+                        {
+                            Exitoso = false,
+                            Mensaje = $"Error al subir el icono: {ex.Message}",
+                            CodigoEstado = 500
+                        };
+                    }
+                }
+
+                // Crear nueva red social
+                var nuevaRedSocial = new RedSocialContacto
+                {
+                    Plataforma = redSocialRequest.Plataforma.Trim(),
+                    Url = redSocialRequest.Url.Trim(),
+                    IconUrl = iconUrl,
+                    UsuarioAdministradorId = usuarioAdministradorId,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
                 };
+
+                // Guardar en base de datos
+                var redSocialCreada = await _redSocialRepositorio.InsertarRedSocialContactoAsync(nuevaRedSocial);
+
+                // Mapear a DTO de respuesta
+                var redSocialDTO = MapearRedSocialADTO(redSocialCreada);
 
                 return new ApiResponseDTO<RedSocialContactoResponseDTO>
                 {
                     Exitoso = true,
-                    Mensaje = "Red social obtenida correctamente",
+                    Mensaje = "Red social creada correctamente",
                     Datos = redSocialDTO,
-                    CodigoEstado = 200
+                    CodigoEstado = 201 // Created
                 };
             }
             catch (Exception ex)
@@ -123,10 +190,21 @@ namespace portafolio.backend.API.Servicios
                 return new ApiResponseDTO<RedSocialContactoResponseDTO>
                 {
                     Exitoso = false,
-                    Mensaje = $"Error al obtener red social: {ex.Message}",
+                    Mensaje = $"Error al crear red social: {ex.Message}",
                     CodigoEstado = 500
                 };
             }
+        }
+
+        private RedSocialContactoResponseDTO MapearRedSocialADTO(RedSocialContacto redSocial)
+        {
+            return new RedSocialContactoResponseDTO
+            {
+                Id = redSocial.Id,
+                Plataforma = redSocial.Plataforma,
+                Url = redSocial.Url,
+                IconUrl = redSocial.IconUrl
+            };
         }
     }
 }

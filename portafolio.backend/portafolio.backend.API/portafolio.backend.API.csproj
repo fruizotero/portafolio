@@ -23,7 +23,6 @@
     <Folder Include="Contexto\Migraciones\" />
     <Folder Include="Dominio\DTOs\Educacion\" />
     <Folder Include="Dominio\DTOs\Empleo\" />
-    <Folder Include="Dominio\DTOs\RedSocialContacto\" />
   </ItemGroup>
 
 </Project>
