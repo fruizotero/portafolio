@@ -44,5 +44,12 @@ namespace portafolio.backend.API.Controladores
             var response = await _proyectoServicio.CrearProyectoAsync(usuarioAdministradorId, proyectoRequest);
             return StatusCode(response.CodigoEstado, response);
         }
+
+        [HttpDelete("{id}/usuario/{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<string>>> EliminarProyecto(int id, int usuarioAdministradorId)
+        {
+            var response = await _proyectoServicio.EliminarProyectoAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }

@@ -33,5 +33,36 @@ namespace portafolio.backend.API.Contexto.Repositorios
             await _context.SaveChangesAsync();
             return habilidad;
         }
+
+        // obtener habilidad por id y id de usuario administador
+        public async Task<Habilidad?> ObtenerHabilidadPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
+        {
+            return await _context.Habilidades
+                .FirstOrDefaultAsync(h => h.Id == id && h.UsuarioAdministradorId == usuarioAdministradorId);
+        }
+
+        // Verificar si la habilidad tiene proyectos asociados
+        public async Task<bool> TieneProyectosAsociadosAsync(int habilidadId)
+        {
+            var habilidad = await _context.Habilidades
+                .Include(h => h.Proyectos)
+                .FirstOrDefaultAsync(h => h.Id == habilidadId);
+            
+            return habilidad != null && habilidad.Proyectos.Any();
+        }
+
+        // Eliminar una habilidad
+        public async Task<bool> EliminarHabilidadAsync(int habilidadId)
+        {
+            var habilidad = await _context.Habilidades.FindAsync(habilidadId);
+            if (habilidad == null)
+            {
+                return false;
+            }
+            
+            _context.Habilidades.Remove(habilidad);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

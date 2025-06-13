@@ -33,5 +33,26 @@ namespace portafolio.backend.API.Contexto.Repositorios
             await _ctx.SaveChangesAsync();
             return redSocial;
         }
+
+        // Método para eliminar una red social
+        public async Task<bool> EliminarRedSocialContactoAsync(int redSocialId)
+        {
+            try
+            {
+                var redSocial = await _ctx.RedesSocialesContacto.FindAsync(redSocialId);
+                if (redSocial == null)
+                {
+                    return false;
+                }
+                
+                _ctx.RedesSocialesContacto.Remove(redSocial);
+                await _ctx.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

@@ -37,6 +37,11 @@ namespace portafolio.backend.API.Controladores
             return StatusCode(response.CodigoEstado, response);
         }
 
-      
+        [HttpDelete("{id}/usuario/{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<string>>> EliminarConocimiento(int id, int usuarioAdministradorId)
+        {
+            var response = await _conocimientoServicio.EliminarConocimientoAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }

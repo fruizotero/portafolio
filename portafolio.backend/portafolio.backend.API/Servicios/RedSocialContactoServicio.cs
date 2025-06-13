@@ -196,6 +196,84 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
+        // Método para eliminar una red social de contacto
+        public async Task<ApiResponseDTO<string>> EliminarRedSocialContactoAsync(int id, int usuarioAdministradorId)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si la red social existe y pertenece al usuario
+                var redSocial = await _redSocialRepositorio.ObtenerRedSocialPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
+                if (redSocial == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Red social no encontrada o no pertenece al usuario",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Guardar la URL del icono para eliminarla después
+                string? iconUrl = redSocial.IconUrl;
+
+                // Eliminar la red social
+                var resultado = await _redSocialRepositorio.EliminarRedSocialContactoAsync(id);
+                if (!resultado)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Error al eliminar la red social",
+                        CodigoEstado = 500
+                    };
+                }
+
+                // Eliminar el icono del almacenamiento si existe y si tenemos un servicio para ello
+                if (!string.IsNullOrEmpty(iconUrl))
+                {
+                    try
+                    {
+                        // Si tienes un método para eliminar imágenes, úsalo aquí
+                        // await _servicioImagenes.EliminarImagenAsync(iconUrl);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Registrar el error pero continuar, ya que la red social ya se eliminó
+                        // Podrías usar un servicio de logging aquí
+                        Console.WriteLine($"Error al eliminar imagen: {ex.Message}");
+                    }
+                }
+
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = true,
+                    Mensaje = "Red social eliminada correctamente",
+                    CodigoEstado = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al eliminar red social: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
         private RedSocialContactoResponseDTO MapearRedSocialADTO(RedSocialContacto redSocial)
         {
             return new RedSocialContactoResponseDTO

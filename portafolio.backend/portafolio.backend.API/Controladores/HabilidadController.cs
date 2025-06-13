@@ -37,5 +37,12 @@ namespace portafolio.backend.API.Controladores
             var response = await _habilidadServicio.CrearHabilidadAsync(usuarioAdministradorId, habilidadRequest);
             return StatusCode(response.CodigoEstado, response);
         }
+
+        [HttpDelete("{id}/usuario/{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<string>>> EliminarHabilidad(int id, int usuarioAdministradorId)
+        {
+            var response = await _habilidadServicio.EliminarHabilidadAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }

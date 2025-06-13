@@ -37,5 +37,12 @@ namespace portafolio.backend.API.Controladores
             var response = await _educacionServicio.CrearEducacionAsync(usuarioAdministradorId, educacionRequest);
             return StatusCode(response.CodigoEstado, response);
         }
+
+        [HttpDelete("{id}/usuario/{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<string>>> EliminarEducacion(int id, int usuarioAdministradorId)
+        {
+            var response = await _educacionServicio.EliminarEducacionAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }

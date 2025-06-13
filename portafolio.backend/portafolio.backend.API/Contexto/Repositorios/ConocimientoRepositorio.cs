@@ -44,5 +44,29 @@ namespace portafolio.backend.API.Contexto.Repositorios
             await _ctx.SaveChangesAsync();
             return conocimiento;
         }
+
+        // Verificar si el conocimiento tiene proyectos asociados
+        public async Task<bool> TieneProyectosAsociadosAsync(int conocimientoId)
+        {
+            var conocimiento = await _ctx.Conocimientos
+                .Include(c => c.Proyectos)
+                .FirstOrDefaultAsync(c => c.Id == conocimientoId);
+            
+            return conocimiento != null && conocimiento.Proyectos.Any();
+        }
+
+        // Eliminar un conocimiento
+        public async Task<bool> EliminarConocimientoAsync(int conocimientoId)
+        {
+            var conocimiento = await _ctx.Conocimientos.FindAsync(conocimientoId);
+            if (conocimiento == null)
+            {
+                return false;
+            }
+            
+            _ctx.Conocimientos.Remove(conocimiento);
+            await _ctx.SaveChangesAsync();
+            return true;
+        }
     }
 }

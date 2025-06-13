@@ -217,6 +217,65 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
+        // Método para eliminar una educación
+        public async Task<ApiResponseDTO<string>> EliminarEducacionAsync(int id, int usuarioAdministradorId)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si la educación existe y pertenece al usuario
+                var educacion = await _educacionRepositorio.ObtenerEducacionPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
+                if (educacion == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Registro de educación no encontrado o no pertenece al usuario",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Eliminar la educación
+                var resultado = await _educacionRepositorio.EliminarEducacionAsync(id);
+                if (!resultado)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Error al eliminar el registro de educación",
+                        CodigoEstado = 500
+                    };
+                }
+
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = true,
+                    Mensaje = "Registro de educación eliminado correctamente",
+                    CodigoEstado = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al eliminar registro de educación: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
         private EducacionResponseDTO MapearEducacionADTO(Educacion educacion)
         {
             return new EducacionResponseDTO

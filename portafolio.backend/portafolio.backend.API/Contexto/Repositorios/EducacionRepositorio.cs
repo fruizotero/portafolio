@@ -33,5 +33,25 @@ namespace portafolio.backend.API.Contexto.Repositorios
             await _ctx.SaveChangesAsync();
             return educacion;
         }
+
+        public async Task<bool> EliminarEducacionAsync(int educacionId)
+        {
+            try
+            {
+                var educacion = await _ctx.Educaciones.FindAsync(educacionId);
+                if (educacion == null)
+                {
+                    return false;
+                }
+                
+                _ctx.Educaciones.Remove(educacion);
+                await _ctx.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

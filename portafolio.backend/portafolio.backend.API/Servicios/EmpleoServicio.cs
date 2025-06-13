@@ -217,6 +217,65 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
+        // Método para eliminar un empleo
+        public async Task<ApiResponseDTO<string>> EliminarEmpleoAsync(int id, int usuarioAdministradorId)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si el empleo existe y pertenece al usuario
+                var empleo = await _empleoRepositorio.ObtenerEmpleoPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
+                if (empleo == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Empleo no encontrado o no pertenece al usuario",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Eliminar el empleo
+                var resultado = await _empleoRepositorio.EliminarEmpleoAsync(id);
+                if (!resultado)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Error al eliminar el empleo",
+                        CodigoEstado = 500
+                    };
+                }
+
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = true,
+                    Mensaje = "Empleo eliminado correctamente",
+                    CodigoEstado = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al eliminar empleo: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
         private EmpleoResponseDTO MapearEmpleoADTO(Empleo empleo)
         {
             return new EmpleoResponseDTO

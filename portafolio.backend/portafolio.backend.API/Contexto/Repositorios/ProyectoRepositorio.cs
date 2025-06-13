@@ -57,10 +57,28 @@ namespace portafolio.backend.API.Contexto.Repositorios
         public async Task<Proyecto?> ObtenerProyectoCompletoConRelacionesPorIdAsync(int id)
         {
             return await _ctx.Proyectos
-                .Where(p => p.Id == id)
-                .Include(p => p.Conocimientos)
                 .Include(p => p.Habilidades)
-                .FirstOrDefaultAsync();
+                .Include(p => p.Conocimientos)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        // Eliminar un proyecto
+        public async Task<bool> EliminarProyectoAsync(Proyecto proyecto)
+        {
+            try
+            {
+                // Eliminar relaciones con habilidades y conocimientos
+                proyecto.Habilidades.Clear();
+                proyecto.Conocimientos.Clear();
+                
+                _ctx.Proyectos.Remove(proyecto);
+                await _ctx.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

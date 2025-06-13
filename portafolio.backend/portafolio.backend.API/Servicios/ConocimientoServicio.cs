@@ -225,6 +225,77 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
+        // Método para eliminar un conocimiento
+        public async Task<ApiResponseDTO<string>> EliminarConocimientoAsync(int id, int usuarioAdministradorId)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si el conocimiento existe y pertenece al usuario
+                var conocimiento = await _conocimientoRepositorio.ObtenerConocimientoPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
+                if (conocimiento == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Conocimiento no encontrado o no pertenece al usuario",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si tiene proyectos asociados
+                var tieneProyectos = await _conocimientoRepositorio.TieneProyectosAsociadosAsync(id);
+                if (tieneProyectos)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "No se puede eliminar el conocimiento porque está asociado a uno o más proyectos",
+                        CodigoEstado = 409 // Conflict
+                    };
+                }
+
+                // Eliminar el conocimiento
+                var resultado = await _conocimientoRepositorio.EliminarConocimientoAsync(id);
+                if (!resultado)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Error al eliminar el conocimiento",
+                        CodigoEstado = 500
+                    };
+                }
+
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = true,
+                    Mensaje = "Conocimiento eliminado correctamente",
+                    CodigoEstado = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al eliminar conocimiento: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
         private ConocimientoResponseDTO MapearConocimientoADTO(Conocimiento conocimiento)
         {
             return new ConocimientoResponseDTO

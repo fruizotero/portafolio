@@ -322,6 +322,95 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
+        // Método para eliminar un proyecto
+        public async Task<ApiResponseDTO<string>> EliminarProyectoAsync(int id, int usuarioAdministradorId)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepo.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si el proyecto existe y pertenece al usuario
+                var proyecto = await _proyectoRepositorio.ObtenerProyectoCompletoConRelacionesPorIdAsync(id);
+                if (proyecto == null || proyecto.UsuarioAdministradorId != usuarioAdministradorId)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Proyecto no encontrado o no pertenece al usuario",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Lista para almacenar las URLs de imágenes a eliminar
+                List<string> imagenesParaEliminar = new List<string>();
+                
+                // Agregar URLs de imágenes si existen
+                if (!string.IsNullOrEmpty(proyecto.ImagenDesktopUrl))
+                {
+                    imagenesParaEliminar.Add(proyecto.ImagenDesktopUrl);
+                }
+                
+                if (!string.IsNullOrEmpty(proyecto.ImagenMobileUrl))
+                {
+                    imagenesParaEliminar.Add(proyecto.ImagenMobileUrl);
+                }
+
+                // Eliminar el proyecto de la base de datos
+                var resultado = await _proyectoRepositorio.EliminarProyectoAsync(proyecto);
+                if (!resultado)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Error al eliminar el proyecto",
+                        CodigoEstado = 500
+                    };
+                }
+
+                // Eliminar imágenes del almacenamiento si hay un servicio para esto
+                // Esta parte depende de tu implementación del servicio de imágenes
+                foreach (var imagenUrl in imagenesParaEliminar)
+                {
+                    try
+                    {
+                        // Si tienes un método para eliminar imágenes del servicio, úsalo aquí
+                        // await _servicioImagenes.EliminarImagenAsync(imagenUrl);
+                    }
+                    catch (Exception)
+                    {
+                        // Registrar error pero continuar, ya que el proyecto ya se eliminó
+                    }
+                }
+
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = true,
+                    Mensaje = "Proyecto eliminado correctamente",
+                    Datos = null,
+                    CodigoEstado = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al eliminar proyecto: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
         private static ProyectoResponseDTO MapearProyectoADTO(Proyecto proyectoCompleto)
         {
 

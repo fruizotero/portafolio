@@ -31,5 +31,12 @@ namespace portafolio.backend.API.Controladores
             var response = await _redSocialServicio.CrearRedSocialContactoAsync(usuarioAdministradorId, redSocialRequest);
             return StatusCode(response.CodigoEstado, response);
         }
+
+        [HttpDelete("{id}/usuario/{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<string>>> EliminarRedSocialContacto(int id, int usuarioAdministradorId)
+        {
+            var response = await _redSocialServicio.EliminarRedSocialContactoAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }

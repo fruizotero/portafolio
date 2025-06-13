@@ -223,6 +223,78 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
+        // Método para eliminar una habilidad
+        public async Task<ApiResponseDTO<string>> EliminarHabilidadAsync(int id, int usuarioAdministradorId)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si la habilidad existe y pertenece al usuario
+                var habilidad = await _habilidadRepositorio.ObtenerHabilidadPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
+                if (habilidad == null)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Habilidad no encontrada o no pertenece al usuario",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Verificar si tiene proyectos asociados
+                var tieneProyectos = await _habilidadRepositorio.TieneProyectosAsociadosAsync(id);
+                if (tieneProyectos)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "No se puede eliminar la habilidad porque está asociada a uno o más proyectos",
+                        CodigoEstado = 409 // Conflict
+                    };
+                }
+
+                // Eliminar la habilidad
+                var resultado = await _habilidadRepositorio.EliminarHabilidadAsync(id);
+                if (!resultado)
+                {
+                    return new ApiResponseDTO<string>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Error al eliminar la habilidad",
+                        CodigoEstado = 500
+                    };
+                }
+
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = true,
+                    Mensaje = "Habilidad eliminada correctamente",
+                    Datos = null,
+                    CodigoEstado = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<string>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al eliminar habilidad: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
         private HabilidadResponseDTO MapearHabilidadADTO(Habilidad habilidad)
         {
             return new HabilidadResponseDTO

@@ -37,5 +37,12 @@ namespace portafolio.backend.API.Controladores
             var response = await _empleoServicio.CrearEmpleoAsync(usuarioAdministradorId, empleoRequest);
             return StatusCode(response.CodigoEstado, response);
         }
+
+        [HttpDelete("{id}/usuario/{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<string>>> EliminarEmpleo(int id, int usuarioAdministradorId)
+        {
+            var response = await _empleoServicio.EliminarEmpleoAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }
