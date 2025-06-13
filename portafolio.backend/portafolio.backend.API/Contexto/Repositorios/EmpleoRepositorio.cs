@@ -26,5 +26,13 @@ namespace portafolio.backend.API.Contexto.Repositorios
             return await _ctx.Empleos
                 .FirstOrDefaultAsync(e => e.Id == id && e.UsuarioAdministradorId == usuarioAdministradorId);
         }
+
+        // Método para insertar un nuevo empleo
+        public async Task<Empleo> InsertarEmpleoAsync(Empleo empleo)
+        {
+            await _ctx.Empleos.AddAsync(empleo);
+            await _ctx.SaveChangesAsync();
+            return empleo;
+        }
     }
 }

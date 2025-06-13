@@ -38,5 +38,19 @@ namespace portafolio.backend.API.Controladores
             }
             return Ok(response);
         }
+
+        [HttpGet("{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<EmpleoResponseDTO>>>> ObtenerEmpleosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
+        {
+            var response = await _empleoServicio.ObtenerEmpleosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
+
+        [HttpPost("{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<EmpleoResponseDTO>>> CrearEmpleo(int usuarioAdministradorId, [FromBody] EmpleoRequestDTO empleoRequest)
+        {
+            var response = await _empleoServicio.CrearEmpleoAsync(usuarioAdministradorId, empleoRequest);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }

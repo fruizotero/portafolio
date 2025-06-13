@@ -1,9 +1,9 @@
-    // Dominio/DTOs/Empleo/EmpleoResponseDTO.cs
+using System.ComponentModel.DataAnnotations;
+
 namespace portafolio.backend.API.Dominio.DTOs.Empleo
 {
-    public class EmpleoResponseDTO
+    public class EmpleoRequestDTO
     {
-        public int Id { get; set; }
         public string Empresa { get; set; } = null!;
         public string Cargo { get; set; } = null!;
         public DateTime FechaInicio { get; set; }
