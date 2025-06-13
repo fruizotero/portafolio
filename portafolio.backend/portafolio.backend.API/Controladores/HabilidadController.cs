@@ -16,14 +16,14 @@ namespace portafolio.backend.API.Controladores
             _habilidadServicio = habilidadServicio ?? throw new ArgumentNullException(nameof(habilidadServicio));
         }
 
-        [HttpGet("{usuarioAdministradorId}")]
+        [HttpGet("usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<HabilidadResponseDTO>>>> ObtenerHabilidadesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _habilidadServicio.ObtenerHabilidadesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
             return StatusCode(response.CodigoEstado, response);
         }
 
-        [HttpGet("{usuarioAdministradorId}/actuales")]
+        [HttpGet("usuario/{usuarioAdministradorId}/actuales")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<HabilidadResponseDTO>>>> ObtenerHabilidadesActualesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _habilidadServicio.ObtenerHabilidadesActualesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);

@@ -30,7 +30,7 @@ let usuarioAdministradorId = localStorage.getItem('usuarioId')
 const { data, isLoading, get, isSuccess } = useGet()
 
 onMounted(async () => {
-  await get(`/proyecto/${usuarioAdministradorId}`)
+  await get(`/proyecto/usuario/${usuarioAdministradorId}`)
   if (isSuccess.value) {
 
     proyectos.value = data.value.datos || []

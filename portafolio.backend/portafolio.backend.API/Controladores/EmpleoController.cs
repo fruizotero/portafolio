@@ -18,31 +18,16 @@ namespace portafolio.backend.API.Controladores
         }
 
         [HttpGet("usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<IEnumerable<EmpleoResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
-        {
-            var response = await _empleoServicio.ObtenerEmpleosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
-        }
-
-        [HttpGet("{id}/usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<EmpleoResponseDTO>>> ObtenerPorId(int id, int usuarioAdministradorId)
-        {
-            var response = await _empleoServicio.ObtenerEmpleoPorIdAsync(id, usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
-        }
-
-        [HttpGet("{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<EmpleoResponseDTO>>>> ObtenerEmpleosPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _empleoServicio.ObtenerEmpleosPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
+        }
+
+        [HttpGet("{id}/usuario/{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<EmpleoResponseDTO>>> ObtenerEmpleoPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
+        {
+            var response = await _empleoServicio.ObtenerEmpleoPorIdAsync(id, usuarioAdministradorId);
             return StatusCode(response.CodigoEstado, response);
         }
 

@@ -17,7 +17,7 @@ namespace portafolio.backend.API.Controladores
             _educacionServicio = educacionServicio ?? throw new ArgumentNullException(nameof(educacionServicio));
         }
 
-        [HttpGet("{usuarioAdministradorId}")]
+        [HttpGet("usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<EducacionResponseDTO>>>> ObtenerEducacionesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _educacionServicio.ObtenerEducacionesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);

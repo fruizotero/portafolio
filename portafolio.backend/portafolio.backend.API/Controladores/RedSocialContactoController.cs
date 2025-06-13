@@ -17,7 +17,7 @@ namespace portafolio.backend.API.Controladores
             _redSocialServicio = redSocialServicio ?? throw new ArgumentNullException(nameof(redSocialServicio));
         }
 
-        [HttpGet("{usuarioAdministradorId}")]
+        [HttpGet("usuario/{usuarioAdministradorId}")]
         public async Task<ActionResult<ApiResponseDTO<IEnumerable<RedSocialContactoResponseDTO>>>> ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             var response = await _redSocialServicio.ObtenerRedesSocialesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);

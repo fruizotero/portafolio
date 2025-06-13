@@ -34,22 +34,9 @@ namespace portafolio.backend.API.Controladores
         public async Task<ActionResult<ApiResponseDTO<ConocimientoResponseDTO>>> ObtenerPorId(int id)
         {
             var response = await _conocimientoServicio.ObtenerConocimientoPorIdAsync(id);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            return StatusCode(response.CodigoEstado, response);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<ApiResponseDTO<IEnumerable<ConocimientoResponseDTO>>>> ObtenerTodos()
-        {
-            var response = await _conocimientoServicio.ObtenerTodosLosConocimientosAsync();
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
-        }
+      
     }
 }
