@@ -27,8 +27,11 @@ namespace portafolio.backend.API.Contexto.Repositorios
                 .FirstOrDefaultAsync(e => e.Id == id && e.UsuarioAdministradorId == usuarioAdministradorId);
         }
 
-  
-
-      
+        public async Task<Educacion> InsertarEducacionAsync(Educacion educacion)
+        {
+            await _ctx.Educaciones.AddAsync(educacion);
+            await _ctx.SaveChangesAsync();
+            return educacion;
+        }
     }
 }

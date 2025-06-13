@@ -17,30 +17,25 @@ namespace portafolio.backend.API.Controladores
             _educacionServicio = educacionServicio ?? throw new ArgumentNullException(nameof(educacionServicio));
         }
 
-        [HttpGet("usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<IEnumerable<EducacionResponseDTO>>>> ObtenerPorUsuario(int usuarioAdministradorId)
+        [HttpGet("{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<IEnumerable<EducacionResponseDTO>>>> ObtenerEducacionesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
-            var response = await _educacionServicio.ObtenerPorUsuarioAsync(usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            var response = await _educacionServicio.ObtenerEducacionesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
         }
 
         [HttpGet("{id}/usuario/{usuarioAdministradorId}")]
-        public async Task<ActionResult<ApiResponseDTO<EducacionResponseDTO>>> ObtenerPorId(int id, int usuarioAdministradorId)
+        public async Task<ActionResult<ApiResponseDTO<EducacionResponseDTO>>> ObtenerEducacionPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
         {
-            var response = await _educacionServicio.ObtenerPorIdAsync(id, usuarioAdministradorId);
-            if (!response.Exitoso)
-            {
-                return StatusCode(response.CodigoEstado, response);
-            }
-            return Ok(response);
+            var response = await _educacionServicio.ObtenerEducacionPorIdYUsuarioAdministradorIdAsync(id, usuarioAdministradorId);
+            return StatusCode(response.CodigoEstado, response);
         }
 
-        
-
-       
+        [HttpPost("{usuarioAdministradorId}")]
+        public async Task<ActionResult<ApiResponseDTO<EducacionResponseDTO>>> CrearEducacion(int usuarioAdministradorId, [FromBody] EducacionRequestDTO educacionRequest)
+        {
+            var response = await _educacionServicio.CrearEducacionAsync(usuarioAdministradorId, educacionRequest);
+            return StatusCode(response.CodigoEstado, response);
+        }
     }
 }

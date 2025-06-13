@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Contexto\Migraciones\" />
-    <Folder Include="Dominio\DTOs\Educacion\" />
   </ItemGroup>
 
 </Project>

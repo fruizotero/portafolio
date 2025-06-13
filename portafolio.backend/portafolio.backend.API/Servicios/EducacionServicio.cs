@@ -19,10 +19,11 @@ namespace portafolio.backend.API.Servicios
             _usuariosRepositorio = usuariosRepositorio;
         }
 
-        public async Task<ApiResponseDTO<IEnumerable<EducacionResponseDTO>>> ObtenerPorUsuarioAsync(int usuarioAdministradorId)
+        public async Task<ApiResponseDTO<IEnumerable<EducacionResponseDTO>>> ObtenerEducacionesPorUsuarioAdministradorIdAsync(int usuarioAdministradorId)
         {
             try
             {
+                // Verificar si el usuario existe
                 var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
                 if (usuario == null)
                 {
@@ -47,15 +48,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var educacionesDTO = educaciones.Select(e => new EducacionResponseDTO
-                {
-                    Id = e.Id,
-                    Institucion = e.Institucion,
-                    Titulo = e.Titulo,
-                    FechaInicio = e.FechaInicio,
-                    FechaFin = e.FechaFin,
-                    Descripcion = e.Descripcion
-                });
+                var educacionesDTO = educaciones.Select(MapearEducacionADTO);
 
                 return new ApiResponseDTO<IEnumerable<EducacionResponseDTO>>
                 {
@@ -76,7 +69,7 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
-        public async Task<ApiResponseDTO<EducacionResponseDTO>> ObtenerPorIdAsync(int id, int usuarioAdministradorId)
+        public async Task<ApiResponseDTO<EducacionResponseDTO>> ObtenerEducacionPorIdYUsuarioAdministradorIdAsync(int id, int usuarioAdministradorId)
         {
             try
             {
@@ -92,15 +85,7 @@ namespace portafolio.backend.API.Servicios
                     };
                 }
 
-                var educacionDTO = new EducacionResponseDTO
-                {
-                    Id = educacion.Id,
-                    Institucion = educacion.Institucion,
-                    Titulo = educacion.Titulo,
-                    FechaInicio = educacion.FechaInicio,
-                    FechaFin = educacion.FechaFin,
-                    Descripcion = educacion.Descripcion
-                };
+                var educacionDTO = MapearEducacionADTO(educacion);
 
                 return new ApiResponseDTO<EducacionResponseDTO>
                 {
@@ -121,5 +106,128 @@ namespace portafolio.backend.API.Servicios
             }
         }
 
-         }
+        // Método para crear un nuevo registro de educación
+        public async Task<ApiResponseDTO<EducacionResponseDTO>> CrearEducacionAsync(int usuarioAdministradorId, EducacionRequestDTO educacionRequest)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _usuariosRepositorio.ObtenerUsuarioAdministradorPorIdAsync(usuarioAdministradorId);
+                if (usuario == null)
+                {
+                    return new ApiResponseDTO<EducacionResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Usuario administrador no encontrado",
+                        CodigoEstado = 404
+                    };
+                }
+
+                // Validar campos obligatorios
+                if (string.IsNullOrWhiteSpace(educacionRequest.Institucion))
+                {
+                    return new ApiResponseDTO<EducacionResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "El nombre de la institución es obligatorio",
+                        CodigoEstado = 400
+                    };
+                }
+
+                if (string.IsNullOrWhiteSpace(educacionRequest.Titulo))
+                {
+                    return new ApiResponseDTO<EducacionResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "El título obtenido es obligatorio",
+                        CodigoEstado = 400
+                    };
+                }
+
+                // Validar fechas
+                if (educacionRequest.FechaInicio > DateTime.Now)
+                {
+                    return new ApiResponseDTO<EducacionResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "La fecha de inicio no puede ser futura",
+                        CodigoEstado = 400
+                    };
+                }
+
+                if (educacionRequest.FechaFin.HasValue && educacionRequest.FechaFin.Value < educacionRequest.FechaInicio)
+                {
+                    return new ApiResponseDTO<EducacionResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "La fecha de finalización no puede ser anterior a la fecha de inicio",
+                        CodigoEstado = 400
+                    };
+                }
+
+                // Verificar si ya existe un registro con la misma institución y título para este usuario
+                var educacionesExistentes = await _educacionRepositorio.ObtenerEducacionesPorUsuarioAdministradorIdAsync(usuarioAdministradorId);
+                if (educacionesExistentes.Any(e => 
+                    e.Institucion.Trim().Equals(educacionRequest.Institucion.Trim(), StringComparison.OrdinalIgnoreCase) && 
+                    e.Titulo.Trim().Equals(educacionRequest.Titulo.Trim(), StringComparison.OrdinalIgnoreCase)))
+                {
+                    return new ApiResponseDTO<EducacionResponseDTO>
+                    {
+                        Exitoso = false,
+                        Mensaje = "Ya existe un registro de educación con esta institución y título",
+                        CodigoEstado = 409 // Conflict
+                    };
+                }
+
+                // Crear nuevo registro de educación
+                var nuevaEducacion = new Educacion
+                {
+                    Institucion = educacionRequest.Institucion.Trim(),
+                    Titulo = educacionRequest.Titulo.Trim(),
+                    FechaInicio = educacionRequest.FechaInicio,
+                    FechaFin = educacionRequest.FechaFin,
+                    Descripcion = educacionRequest.Descripcion?.Trim(),
+                    UsuarioAdministradorId = usuarioAdministradorId,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                // Guardar en base de datos
+                var educacionCreada = await _educacionRepositorio.InsertarEducacionAsync(nuevaEducacion);
+
+                // Mapear a DTO de respuesta
+                var educacionDTO = MapearEducacionADTO(educacionCreada);
+
+                return new ApiResponseDTO<EducacionResponseDTO>
+                {
+                    Exitoso = true,
+                    Mensaje = "Registro de educación creado correctamente",
+                    Datos = educacionDTO,
+                    CodigoEstado = 201 // Created
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponseDTO<EducacionResponseDTO>
+                {
+                    Exitoso = false,
+                    Mensaje = $"Error al crear registro de educación: {ex.Message}",
+                    CodigoEstado = 500
+                };
+            }
+        }
+
+        private EducacionResponseDTO MapearEducacionADTO(Educacion educacion)
+        {
+            return new EducacionResponseDTO
+            {
+                Id = educacion.Id,
+                Institucion = educacion.Institucion,
+                Titulo = educacion.Titulo,
+                FechaInicio = educacion.FechaInicio,
+                FechaFin = educacion.FechaFin,
+                Descripcion = educacion.Descripcion
+            };
+        }
+    }
 }
