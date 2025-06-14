@@ -8,12 +8,29 @@
       enableLink: true,
       routeName: 'detalle-proyecto',
       idParam: 'projectId'
-    }" :onEdit="handleEdit" :onDelete="handleDelete" />
+    }" :onEdit="handleEdit" :onDelete="confirmDelete" />
 
 
   <FormularioCrearProyecto ref="form" :usuarioAdministradorId="usuarioId" @created="onProjectCreated">
   </FormularioCrearProyecto>
 
+<!-- Modal de confirmación -->
+    <ModalBaseComponent v-model="showDeleteModal">
+      <template #header>
+        <h3 class="text-lg font-bold text-red-600">Confirmar Eliminación</h3>
+      </template>
+
+      <p>¿Estás seguro de que quieres eliminar “{{ proyectoToDelete?.titulo }}”?</p>
+
+      <template #footer>
+        <button class="btn btn-secondary mr-2" @click="cancelDelete">
+          Cancelar
+        </button>
+        <button class="btn btn-error" @click="doDelete">
+          Eliminar
+        </button>
+      </template>
+    </ModalBaseComponent>
 </template>
 
 <script setup>
@@ -22,6 +39,9 @@ import { useGet } from '@/comporsables/useGet'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import FormularioCrearProyecto from '../formularios/FormularioCrearProyecto.vue'
+import ModalBaseComponent from '@/components/ModalBaseComponent.vue'
+import { useDelete } from '@/comporsables/useDelete'
+
 // Componente para mostrar la lista de proyectos
 const proyectos = ref([])
 const router = useRouter()
@@ -29,10 +49,15 @@ const router = useRouter()
 const form = ref(null)
 const usuarioId = Number(localStorage.getItem('usuarioId'))
 
+const showDeleteModal = ref(false)
+const proyectoToDelete = ref(null)
+
 
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
 
 const { data, isLoading, get, isSuccess } = useGet()
+const { remove, isLoading: deleting, isSuccess: deleted, error: deleteError } = useDelete()
+
 
 onMounted(async () => {
   await cargarProyectos()
@@ -58,10 +83,26 @@ router.push({
   })
 }
 
-function handleDelete(item) {
-  // Lógica para eliminar el proyecto
+function confirmDelete(item) {
+  proyectoToDelete.value = item
+  showDeleteModal.value = true
+}
 
-  console.log('Eliminar proyecto:', item)
+// El usuario cancela
+function cancelDelete() {
+  proyectoToDelete.value = null
+  showDeleteModal.value = false
+}
+
+async function doDelete() {
+  try {
+    await remove(`/Proyecto/${proyectoToDelete.value.id}/usuario/${usuarioAdministradorId}`)
+    proyectos.value = proyectos.value.filter(p => p.id !== proyectoToDelete.value.id)
+  } catch (e) {
+    console.error('Error borrando:', deleteError.value)
+  } finally {
+    cancelDelete()
+  }
 }
 
 async function  onProjectCreated(data) {

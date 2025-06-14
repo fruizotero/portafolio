@@ -5,10 +5,25 @@
       title: 'nombre',
       image: 'logoUrl',
       enableLink: false,
-    }" :onEdit="handleEdit" :onDelete="handleDelete" />
+    }" :onEdit="handleEdit" :onDelete="confirmDelete" />
   <FormularioCrearHabilidad ref="skillForm" :usuarioAdministradorId="usuarioId" @created="onSkillCreated">
   </FormularioCrearHabilidad>
+<ModalBaseComponent v-model="showDeleteModal">
+      <template #header>
+        <h3 class="text-lg font-bold text-red-600">Confirmar Eliminación</h3>
+      </template>
 
+      <p>¿Estás seguro de que quieres eliminar “{{ habilidadToDelete?.nombre }}”?</p>
+
+      <template #footer>
+        <button class="btn btn-secondary mr-2" @click="cancelDelete">
+          Cancelar
+        </button>
+        <button class="btn btn-error" @click="doDelete">
+          Eliminar
+        </button>
+      </template>
+    </ModalBaseComponent>
 </template>
 
 <script setup>
@@ -16,10 +31,15 @@ import ListComponent from '@/components/ListComponent.vue'
 import { useGet } from '@/comporsables/useGet'
 import { ref, onMounted } from 'vue'
 import FormularioCrearHabilidad from '../formularios/FormularioCrearHabilidad.vue'
+import ModalBaseComponent from '@/components/ModalBaseComponent.vue'
+import { useDelete } from '@/comporsables/useDelete'
+
 
 // Componente para mostrar la lista de proyectos
 const habilidades = ref([])
 
+const showDeleteModal = ref(false)
+const habilidadToDelete = ref(null)
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
 
 const usuarioId = Number(localStorage.getItem('usuarioId'))
@@ -48,9 +68,36 @@ function handleEdit(item) {
   console.log(item);
 }
 
-function handleDelete(item) {
-  // Lógica para eliminar el proyecto
-  console.log('Eliminar proyecto:', item)
+
+// Composable DELETE
+const { remove, isLoading: deleting, error: deleteError } = useDelete()
+
+// Abre el modal con el ítem seleccionado
+function confirmDelete(item) {
+  habilidadToDelete.value = item
+  showDeleteModal.value = true
+}
+
+// Cierra el modal sin borrar
+function cancelDelete() {
+  showDeleteModal.value = false
+  habilidadToDelete.value = null
+}
+
+// Ejecuta el DELETE y recarga la lista
+async function doDelete() {
+  try {
+    await remove(
+      `/Habilidad/${habilidadToDelete.value.id}/usuario/${usuarioAdministradorId}`
+    )
+    habilidades.value = habilidades.value.filter(
+      c => c.id !== habilidadToDelete.value.id
+    )
+  } catch (e) {
+    console.error('Error borrando habilidad:', deleteError.value)
+  } finally {
+    cancelDelete()
+  }
 }
 
 async function onSkillCreated(response) {
