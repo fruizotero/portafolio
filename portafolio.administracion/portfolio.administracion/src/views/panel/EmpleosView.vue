@@ -1,4 +1,11 @@
 <template>
+  <AlertComponent
+      v-model:visible="showAlert"
+      :success="isSuccess"
+      :message="alertMessage"
+      :duration="5000"
+      class="sticky top-4 right-4 z-50 ml-auto"
+    />
   <button class="btn" @click="empForm.open()">Nuevo Empleo</button>
   <ListComponent
     title="Empleos"
@@ -45,17 +52,21 @@ import { ref, onMounted } from 'vue'
 import FormularioCrearEmpleo from '../formularios/FormularioCrearEmpleo.vue'
 import ModalBaseComponent from '@/components/ModalBaseComponent.vue'
 import { useDelete } from '@/comporsables/useDelete'
+import AlertComponent from '@/components/AlertComponent.vue'
 
 // Componente para mostrar la lista de proyectos
 const empleos = ref([])
 const showDeleteModal = ref(false)
 const empleoToDelete = ref(null)
 const usuarioId = Number(localStorage.getItem('usuarioId'))
+const showAlert = ref(false)
+const alertMessage = ref('')
+const isSuccess = ref(false)
 const empForm = ref(null)
 
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
 
-const { data, isLoading, get, isSuccess } = useGet()
+const { data, get, isSuccess: fetchSuccess } = useGet()
 
 onMounted(async () => {
   await caragarEmpleos()
@@ -63,7 +74,7 @@ onMounted(async () => {
 
 async function caragarEmpleos() {
   await get(`/Empleo/usuario/${usuarioAdministradorId}`)
-  if (isSuccess.value) {
+  if (fetchSuccess.value) {
 
     empleos.value = data.value.datos || []
   } else {
@@ -77,7 +88,7 @@ function handleEdit(item) {
 }
 
 // Composable DELETE
-const { remove, isLoading: deleting, error: deleteError } = useDelete()
+const { remove,  error: deleteError } = useDelete()
 
 // Abre el modal con el ítem seleccionado
 function confirmDelete(item) {
@@ -100,8 +111,13 @@ async function doDelete() {
     empleos.value = empleos.value.filter(
       c => c.id !== empleoToDelete.value.id
     )
+    alertMessage.value = 'Empleo eliminado correctamente.'
+    isSuccess.value = true
+    showAlert.value = true
   } catch (e) {
-    console.error('Error borrando empleo:', deleteError.value)
+    alertMessage.value = deleteError.value || 'Error al eliminar el empleo.'
+    isSuccess.value = false
+    showAlert.value = true
   } finally {
     cancelDelete()
   }
@@ -109,9 +125,16 @@ async function doDelete() {
 
 
 async function onCreated(response) {
-  // actualizar lista de empleos…
+
+ if(response.exitoso === false) {
+    alertMessage.value = response.mensaje || 'Error al crear el empleo.'
+    showAlert.value = true
+    isSuccess.value = false
+  } else {
+    alertMessage.value = 'Empleo creado exitosamente.'
+    showAlert.value = true
+    isSuccess.value = true
+  }
   await caragarEmpleos()
-  // o notificar al usuario
-  console.log('Empleo creado:', response)
 }
 </script>

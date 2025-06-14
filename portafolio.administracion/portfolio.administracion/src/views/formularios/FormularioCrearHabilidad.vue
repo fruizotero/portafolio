@@ -105,7 +105,7 @@ async function submit() {
     emit('created', res.data)
     close()
   } catch (err) {
-    console.error('Error al crear habilidad:', err)
+     emit('created', err.response?.data || err)
   }
 }
 

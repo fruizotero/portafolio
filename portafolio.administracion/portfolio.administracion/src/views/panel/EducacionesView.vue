@@ -1,4 +1,11 @@
 <template>
+   <AlertComponent
+      v-model:visible="showAlert"
+      :success="isSuccess"
+      :message="alertMessage"
+      :duration="5000"
+      class="sticky top-4 right-4 z-50 ml-auto"
+    />
   <button class="btn" @click="educForm.open()">Nueva Educación</button>
   <ListComponent title="Educación" :items="educacion" :fields="{
       id: 'id',
@@ -39,15 +46,18 @@ import { ref, onMounted } from 'vue'
 import FormularioCrearEducacion from '../formularios/FormularioCrearEducacion.vue'
 import ModalBaseComponent from '@/components/ModalBaseComponent.vue'
 import { useDelete } from '@/comporsables/useDelete'
-
+import AlertComponent from '@/components/AlertComponent.vue'
 
 const educacion = ref([])
 
 const showDeleteModal = ref(false)
 const educacionToDelete = ref(null)
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
+const showAlert = ref(false)
+const alertMessage = ref('')
+const isSuccess = ref(false)
 
-const { data, isLoading, get, isSuccess } = useGet()
+const { data, isLoading, get, isSuccess: fetchSuccess } = useGet()
 const usuarioId = Number(localStorage.getItem('usuarioId'))
 const educForm = ref(null)
 
@@ -56,7 +66,7 @@ onMounted(async () => {
 })
 async function cargarEducacion() {
   await get(`/Educacion/usuario/${usuarioAdministradorId}`)
-  if (isSuccess.value) {
+  if (fetchSuccess.value) {
 
     educacion.value = data.value.datos || []
   } else {
@@ -70,7 +80,7 @@ function handleEdit(item) {
 }
 
 // Composable DELETE
-const { remove, isLoading: deleting, error: deleteError } = useDelete()
+const { remove,  error: deleteError } = useDelete()
 
 // Abre el modal con el ítem seleccionado
 function confirmDelete(item) {
@@ -93,15 +103,30 @@ async function doDelete() {
     educacion.value = educacion.value.filter(
       c => c.id !== educacionToDelete.value.id
     )
+    alertMessage.value = 'Educación eliminada correctamente.'
+    isSuccess.value = true
+    showAlert.value = true
   } catch (e) {
-    console.error('Error borrando educación:', deleteError.value)
+   alertMessage.value = deleteError.value || 'Error al eliminar la educación.'
+    isSuccess.value = false
+    showAlert.value = true
+
   } finally {
     cancelDelete()
   }
 }
 async function onEducCreated(response) {
   // refrescar lista, notificar, etc.
-  console.log('Educación creada:', response)
+  console.log(response);
+ if(response.exitoso === false) {
+    alertMessage.value = response.mensaje || 'Error al crear la educación.'
+    isSuccess.value = false
+    showAlert.value = true
+  } else {
+    alertMessage.value = response.mensaje || 'Educación creada exitosamente.'
+    isSuccess.value = true
+    showAlert.value = true
+  }
   await cargarEducacion()
 }
 </script>

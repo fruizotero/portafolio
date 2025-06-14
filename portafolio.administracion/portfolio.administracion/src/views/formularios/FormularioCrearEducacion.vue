@@ -102,6 +102,7 @@ async function submit() {
     emit('created', res.data)
     close()
   } catch (err) {
+    emit('created', err.response?.data || err)
     console.error(err)
   }
 }

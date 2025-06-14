@@ -1,4 +1,11 @@
 <template>
+  <AlertComponent
+      v-model:visible="showAlert"
+      :success="isSuccess"
+      :message="alertMessage"
+      :duration="5000"
+      class="sticky top-4 right-4 z-50 ml-auto"
+    />
   <button class="btn" @click="skillForm.open()">Nueva Habilidad</button>
   <ListComponent title="Habilidades" :items="habilidades" :fields="{
       id: 'id',
@@ -33,7 +40,7 @@ import { ref, onMounted } from 'vue'
 import FormularioCrearHabilidad from '../formularios/FormularioCrearHabilidad.vue'
 import ModalBaseComponent from '@/components/ModalBaseComponent.vue'
 import { useDelete } from '@/comporsables/useDelete'
-
+import AlertComponent from '@/components/AlertComponent.vue'
 
 // Componente para mostrar la lista de proyectos
 const habilidades = ref([])
@@ -41,11 +48,14 @@ const habilidades = ref([])
 const showDeleteModal = ref(false)
 const habilidadToDelete = ref(null)
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
+const showAlert = ref(false)
+const alertMessage = ref('')
+const isSuccess = ref(false)
 
 const usuarioId = Number(localStorage.getItem('usuarioId'))
 const skillForm = ref(null)
 
-const { data, isLoading, get, isSuccess } = useGet()
+const { data, isLoading, get, isSuccess: fetchSuccess } = useGet()
 
 onMounted(async () => {
   await cargarHabilidades()
@@ -53,7 +63,7 @@ onMounted(async () => {
 
 async function cargarHabilidades() {
   await get(`/Habilidad/usuario/${usuarioAdministradorId}`)
-  if (isSuccess.value) {
+  if (fetchSuccess.value) {
 
     habilidades.value = data.value.datos || []
   } else {
@@ -70,7 +80,7 @@ function handleEdit(item) {
 
 
 // Composable DELETE
-const { remove, isLoading: deleting, error: deleteError } = useDelete()
+const { remove,  error: deleteError } = useDelete()
 
 // Abre el modal con el ítem seleccionado
 function confirmDelete(item) {
@@ -93,16 +103,30 @@ async function doDelete() {
     habilidades.value = habilidades.value.filter(
       c => c.id !== habilidadToDelete.value.id
     )
+    alertMessage.value = 'Habilidad eliminada correctamente.'
+    isSuccess.value = true
+    showAlert.value = true
   } catch (e) {
-    console.error('Error borrando habilidad:', deleteError.value)
+    alertMessage.value = deleteError.value || 'Error al eliminar la habilidad.'
+    isSuccess.value = false
+    showAlert.value = true
   } finally {
     cancelDelete()
   }
 }
 
 async function onSkillCreated(response) {
-  console.log('Habilidad creada:', response)
-  // refresca lista de habilidades…
+
+
+  if(response.exitoso === false) {
+    alertMessage.value = response.mensaje || 'Error al crear la habilidad'
+    showAlert.value = true
+    isSuccess.value = false
+    return
+  }
+  alertMessage.value = response.mensaje || 'Habilidad creada exitosamente'
+  showAlert.value = true
+  isSuccess.value = true
   await cargarHabilidades()
 }
 </script>
