@@ -1,4 +1,11 @@
 <template>
+  <AlertComponent
+      v-model:visible="showAlert"
+      :success="isSuccess"
+      :message="alertMessage"
+      :duration="5000"
+      class="sticky top-4 right-4 z-50 ml-auto"
+    />
   <button class="btn" @click="form.open()">Nuevo Conocimiento</button>
   <ListComponent title="Conocimientos" :items="conocimientos" :fields="{
       id: 'id',
@@ -38,15 +45,19 @@ import { ref, onMounted } from 'vue'
 import FormularioCrearConocimiento from '../formularios/FormularioCrearConocimiento.vue'
 import ModalBaseComponent from '@/components/ModalBaseComponent.vue'
 import { useDelete } from '@/comporsables/useDelete'
+import AlertComponent from '@/components/AlertComponent.vue'
 
 
 const conocimientos = ref([])
 const showDeleteModal = ref(false)
 const conocimientoToDelete = ref(null)
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
+const showAlert = ref(false)
+const alertMessage = ref('')
+const isSuccess = ref(false)
 
-const { data, isLoading, get, isSuccess } = useGet()
 
+const { data, get, isSuccess: fetchSuccess } = useGet()
 const usuarioId = Number(localStorage.getItem('usuarioId'))
 const form = ref(null)
 
@@ -55,7 +66,7 @@ onMounted(async () => {
 })
 async function cargarConocimientos() {
   await get(`/Conocimiento/usuario/${usuarioAdministradorId}`)
-  if (isSuccess.value) {
+  if (fetchSuccess.value) {
 
     conocimientos.value = data.value.datos || []
   } else {
@@ -69,7 +80,7 @@ function handleEdit(item) {
 }
 
 // Composable DELETE
-const { remove, isLoading: deleting, error: deleteError } = useDelete()
+const { remove, error: deleteError } = useDelete()
 
 // Abre el modal con el ítem seleccionado
 function confirmDelete(item) {
@@ -92,14 +103,30 @@ async function doDelete() {
     conocimientos.value = conocimientos.value.filter(
       c => c.id !== conocimientoToDelete.value.id
     )
+    alertMessage.value = 'Conocimiento eliminado exitosamente'
+    showAlert.value = true
+    isSuccess.value = true
   } catch (e) {
-    console.error('Error borrando conocimiento:', deleteError.value)
+
+    alertMessage.value = deleteError.value || 'Error al eliminar el conocimiento'
+    showAlert.value = true
+    isSuccess.value = false
   } finally {
     cancelDelete()
   }
 }
 async function onCreated(response) {
-  console.log('Conocimiento creado:', response)
+
+  if(response.exitoso === false) {
+    alertMessage.value = response.mensaje || 'Error al crear el conocimiento'
+    showAlert.value = true
+    isSuccess.value = false
+    return
+  }
+  alertMessage.value = response.mensaje || 'Conocimiento creado exitosamente'
+  showAlert.value = true
+  isSuccess.value = true
+
   await cargarConocimientos()
 }
 </script>

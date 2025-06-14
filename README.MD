@@ -71,3 +71,7 @@ Configuración de las variables de entorno
 ```json
 VITE_API_URL=https://localhost:7161
 ```
+
+### mejoras
+- dividir las responsabilidades de los componentes
+- mejorar los mensajes de feedback a los usuarios

@@ -1,4 +1,11 @@
 <template>
+  <AlertComponent
+      v-model:visible="showAlert"
+      :success="isSuccess"
+      :message="alertMessage"
+      :duration="5000"
+      class="sticky top-4 right-4 z-50 ml-auto"
+    />
   <button class="btn" @click="form.open()">Nueva Red Social</button>
   <ListComponent
     title="Redes Sociales y Contacto"
@@ -42,19 +49,24 @@ import { ref, onMounted } from 'vue'
 import FormularioCrearRedSocialContacto from '../formularios/FormularioCrearRedSocialContacto.vue'
 import ModalBaseComponent from '@/components/ModalBaseComponent.vue'
 import { useDelete } from '@/comporsables/useDelete'
+import AlertComponent from '@/components/AlertComponent.vue'
+
 
 
 // Componente para mostrar la lista de proyectos
 const redesSocialesYContacto = ref([])
 const showDeleteModal = ref(false)
 const redSocialToDelete = ref(null)
-
 let usuarioAdministradorId = localStorage.getItem('usuarioId')
+
+const showAlert = ref(false)
+const alertMessage = ref('')
+const isSuccess = ref(false)
 
 const usuarioId = Number(localStorage.getItem('usuarioId'))
 const form = ref(null)
 
-const { data, isLoading, get, isSuccess } = useGet()
+const { data,  get, isSuccess: fetchSuccess } = useGet()
 
 onMounted(async () => {
   await cargarRedesSocialesYContacto()
@@ -62,7 +74,7 @@ onMounted(async () => {
 
 async function cargarRedesSocialesYContacto() {
   await get(`/RedSocialContacto/usuario/${usuarioAdministradorId}`)
-  if (isSuccess.value) {
+  if (fetchSuccess.value) {
 
     redesSocialesYContacto.value = data.value.datos || []
   } else {
@@ -79,7 +91,7 @@ function handleEdit(item) {
 
 
 // Composable DELETE
-const { remove, isLoading: deleting, error: deleteError } = useDelete()
+const { remove, error: deleteError } = useDelete()
 
 // Abre el modal con el ítem seleccionado
 function confirmDelete(item) {
@@ -102,16 +114,29 @@ async function doDelete() {
     redesSocialesYContacto.value = redesSocialesYContacto.value.filter(
       c => c.id !== redSocialToDelete.value.id
     )
+    alertMessage.value = 'Red social eliminada exitosamente'
+    showAlert.value = true
+    isSuccess.value = true
   } catch (e) {
-    console.error('Error borrando red social:', deleteError.value)
+
+    alertMessage.value =deleteError.value|| 'Error al eliminar la red social'
+    showAlert.value = true
+    isSuccess.value = false
   } finally {
     cancelDelete()
   }
 }
 
 async function onCreated(response) {
-  console.log('Red social creada:', response)
-  // refresca tu listado…
+  if(response.exitoso === false) {
+    alertMessage.value = response.mensaje || 'Error al crear la red social'
+    showAlert.value = true
+    isSuccess.value = false
+    return
+  }
+  alertMessage.value = response.mensaje || 'Red social creada exitosamente'
+  showAlert.value = true
+  isSuccess.value = true
   await cargarRedesSocialesYContacto()
 }
 </script>
