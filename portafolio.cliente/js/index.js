@@ -1,18 +1,14 @@
-import { loadData } from "./load_data.js";
 import { renderSkills } from "./render_skills.js";
 import { renderProjects } from "./render_projects.js";
+import { obtenerEducacion, obtenerEmpleos, obtenerHabilidades, obtenerPerfil, obtenerProyectos, obtenerRedesSocialesContacto } from "./endpoints.js";
 
 const d = document;
-let dataSkills;
-let dataProjects;
 
 d.addEventListener("DOMContentLoaded", async e => {
-    //TODO::loader
-    dataSkills = await loadData(".skills__content", "assets/data/skills.json");
-    renderSkills(dataSkills);
-    dataProjects = await loadData(".section__main-projects", "assets/data/projects.json");
-    renderProjects(dataProjects);
-    console.log(dataProjects);
+
+    await init();
+   
+   
 
 });
 
@@ -104,3 +100,86 @@ d.addEventListener("submit", async e => {
     }
 
 })
+
+async function renderizarPerfil(){
+    const { datos } = await obtenerPerfil();
+    const { nombre, apellidos, saludo, descripcion, acercaDeMi, fotoURL } = datos
+    d.querySelector(".section__salute").innerHTML = saludo;
+    const paragraphsContainerSection1 = document.querySelector('.section-1__paragraphs');
+    paragraphsContainerSection1.innerHTML = addParagraphClass(descripcion);
+    const paragraphsContainerSection2 = document.querySelector('.section-2__paragraphs');
+    paragraphsContainerSection2.innerHTML = addParagraphClass(acercaDeMi);
+}
+
+function addParagraphClass(htmlString) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+
+    doc.body.querySelectorAll('p').forEach(p => {
+        p.classList.add('section__paragraph');
+    });
+
+    return doc.body.innerHTML;
+}
+
+async function renderizarEmpleos(empleos=[]){
+    
+    const sectionListaEmpleos = d.querySelector(".jobs__list");
+    empleos.forEach(empleo => {
+        const li = d.createElement("li");
+        li.classList.add("jobs__item");
+        li.innerText = `${empleo.empresa} - ${empleo.cargo} (${empleo.fechaInicio} - ${empleo.fechaFin})`;
+        sectionListaEmpleos.appendChild(li);
+    });
+}
+
+async function renderizarEducacion(educacion=[]){
+    const sectionListaEducacion = d.querySelector(".education__list");
+    educacion.forEach(edu => {
+        const li = d.createElement("li");
+        li.classList.add("education__item");
+        li.innerText = `${edu.titulo} - ${edu.institucion} (${edu.fechaInicio} - ${edu.fechaFin})`;
+        sectionListaEducacion.appendChild(li);
+    });
+}
+
+async function renderizarRedesSocialesContacto(redesSociales = []) {
+    const sectionRedeesSociales = d.querySelector(".footer__left");
+    redesSociales.forEach(red => {
+       const a = document.createElement('a');
+    a.href = red.url;
+    a.target = '_blank';
+    a.className = 'footer__link';
+
+    // <div class="icon">
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'icon';
+
+    // <img>
+    const img = document.createElement('img');
+    img.src = red.iconUrl;
+    img.alt = red.plataforma;
+    img.className = 'icon__image';
+
+    // Anidamos y añadimos al DOM
+    iconDiv.appendChild(img);
+    a.appendChild(iconDiv);
+    sectionRedeesSociales.appendChild(a);
+    });
+
+
+}
+
+async function init() {
+    await renderizarPerfil();
+    const { datos: habilidades } = await obtenerHabilidades();
+    renderSkills(habilidades);
+    const { datos: proyectos } = await obtenerProyectos();
+    renderProjects(proyectos);
+     const {datos:empleos} = await obtenerEmpleos();
+     renderizarEmpleos(empleos);
+     const {datos:educacion} = await obtenerEducacion();
+     renderizarEducacion(educacion);
+     const {datos:redesSociales} = await obtenerRedesSocialesContacto();
+     renderizarRedesSocialesContacto(redesSociales);
+}
