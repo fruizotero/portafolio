@@ -1,0 +1,23 @@
+services:
+  migrations:
+    build:
+      context: ./portafolio.backend/portafolio.backend.API
+      dockerfile: Dockerfile.migrations
+    # Ejecuta las migraciones; este servicio se iniciará, aplicará las migraciones y luego terminará.
+    entrypoint: ["dotnet", "ef", "database", "update", "--project", "./portafolio.backend.API.csproj", "--startup-project", "./portafolio.backend.API.csproj"]
+    working_dir: /app
+
+  backend:
+    depends_on:
+      - migrations
+    image: portafolio.backend.api:latest
+    build:
+      context: ./portafolio.backend/portafolio.backend.API
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    working_dir: /app
+
+
+  
+# variables de entorno almacenadas en el .env
