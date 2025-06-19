@@ -9,13 +9,13 @@ La aplicación surge debido a la dificultad de mantenimiento y actualización de
 A continuación se muestran capturas que ilustran cómo la solución cumple con los objetivos definidos:
 
 * **Login y autenticación**: Acceso seguro al panel de administración mediante JWT.
-  ![Login Admin](docs/admin-login.png)
+  
 * **Gestión de proyectos**: CRUD completo de proyectos con subida de imágenes.
-  ![Gestión de Proyectos](docs/project-management.png)
+  
 * **Gestión de habilidades**: Añadir, editar y eliminar habilidades dinámicamente.
-  ![Gestión de Habilidades](docs/skills-management.png)
+  
 * **Adaptación del frontend**: El portfolio consume datos en tiempo real desde la API.
-  ![Portfolio Dinámico](docs/portfolio-live.png)
+  
 
 ## 3. Justificación de objetivos
 
