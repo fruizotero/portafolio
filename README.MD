@@ -1,77 +1,136 @@
-# docu temporal (Sin organizar)
-documentación temporal 
 
-## backend
+# Sistema de Gestión de Contenido para Portfolio Personal
 
-## requisitos
-- .net8
-- Microsoft.EntityFrameworkCore
-- Microsoft.EntityFrameworkCore.Tools
-- Microsoft.EntityFrameworkCore.SqlServer
-- Microsoft.AspNetCore.Authentication.JwtBearer
+## 1. Motivación (breve)
 
-## Creación del usuario con permisos para crear el schema en la base de datos.
+La aplicación surge debido a la dificultad de mantenimiento y actualización de un portfolio web estático, donde cada nueva entrada o modificación implica editar archivos JSON o HTML y realizar un despliegue completo, lo que resulta ineficiente, propenso a errores y consume tiempo innecesario.
 
-Para nuestra aplicación, utilizaremos las siguientes credenciales:
+## 2. Demostración del funcionamiento
 
-Usuario: user_portafolio  
-Contraseña: Pass.1234  
+A continuación se muestran capturas que ilustran cómo la solución cumple con los objetivos definidos:
 
+* **Login y autenticación**: Acceso seguro al panel de administración mediante JWT.
+  ![Login Admin](docs/admin-login.png)
+* **Gestión de proyectos**: CRUD completo de proyectos con subida de imágenes.
+  ![Gestión de Proyectos](docs/project-management.png)
+* **Gestión de habilidades**: Añadir, editar y eliminar habilidades dinámicamente.
+  ![Gestión de Habilidades](docs/skills-management.png)
+* **Adaptación del frontend**: El portfolio consume datos en tiempo real desde la API.
+  ![Portfolio Dinámico](docs/portfolio-live.png)
 
-```sql
-CREATE LOGIN user_portafolio WITH PASSWORD = 'Pass.1234';
-ALTER SERVER ROLE dbcreator ADD MEMBER user_portafolio;
+## 3. Justificación de objetivos
+
+| Objetivo                                                      | Estado    |
+| ------------------------------------------------------------- | --------- |
+| 1. API RESTful con endpoints CRUD y autenticación JWT         | Alcanzado |
+| 2. Panel de administración en Vue.js para gestionar contenido | Alcanzado |
+| 3. Adaptación del frontend para consumir datos desde la API   | Alcanzado |
+| 4. Diseño de base de datos y migraciones con EF Core          | Alcanzado |
+| 5. Documentación mínima con Swagger                           | Alcanzado |
+| 6. Caché simple (optimización futura)                         | Pendiente |
+
+Las historias de usuario comprometidas (login, CRUD de proyectos, habilidades y perfil) se han implementado según la especificación.
+
+## 4. Descripción técnica
+
+### a. Arquitectura y tecnologías utilizadas
+
+* **Backend**: ASP.NET Core 8.0, C#, Entity Framework Core, JWT, Swagger/OpenAPI.
+* **Frontend Admin**: Vue.js 3, Javascript, Axios, TailwindCSS + DaisyUI.
+* **Portfolio Cliente**: HTML, CSS, JavaScript adaptado para consumir la API.
+* **Infraestructura**: Docker, Docker Compose, AWS (EC2, RDS, S3), GitHub Actions (CI/CD pendiente).
+
+##  Estructura del Proyecto
+
 ```
-- Comprobamos que nuestro usuario tiene permisos para loguearse:
-
-```sql
-SELECT name, type_desc, is_disabled FROM sys.server_principals WHERE type_desc = 'SQL_LOGIN';
-```
-
-Por tratarse de un proyecto didáctico las credenciales quedarán en el connectionString, de lo contrario es aconsejable utilizar archivos .env, vault de azure, aws key management para administrar las credenciales.
-
-```json
-  "ConnectionStrings": {
-      "DefaultConnection": "Server=localhost;Database=PORTAFOLIO;TrustServerCertificate=True; User Id=user_portafolio;Password=Pass.1234;"
-  },
-```
-
-### paquetes nugget instalados
-
-### migraciones
-
-```bash
-add-migration Inicial -OutputDir "Contexto/Migraciones"
-```
-```bash
-update-database
-```
-
-### usuario por defecto
-usuario: admin@portafolio.com
-contraseña: 1234
-
-## Administración (Front)
-
-### Dependencias
-- daisyUI
-- Tailwindcss
-- axios
-- pinya
-- tiptap
-- heroicons
-
-### instalación tailwind
-https://dev.to/osalumense/install-tailwind-css-v4-in-a-vue-3-vite-project-319g
-### instalación daisyui
-https://daisyui.com/docs/install/vue/
-
-### .env
-Configuración de las variables de entorno
-```json
-VITE_API_URL=https://localhost:7161
+📁 portafolio/
+├── 📁 portafolio.backend/          # API backend en .NET Core
+│   ├── 📁 Controladores/           # Endpoints de la API
+│   ├── 📁 Servicios/               # Lógica de negocio
+│   ├── 📁 Dominio/                 # Entidades y DTOs
+│   ├── 📁 Contexto/                # Acceso a datos y migraciones
+│   └── 📁 Utilidades/              # Helpers y utilidades
+├── 📁 portafolio.administracion/   # Panel de administración (Vue.js)
+│   ├── 📁 src/                     # Código fuente
+│   │   ├── 📁 components/          # Componentes Vue
+│   │   ├── 📁 views/               # Vistas de la aplicación
+│   │   └── 📁 router/              # Configuración de rutas
+└── 📁 portafolio.cliente/          # Frontend público
+    ├── 📁 assets/                  # Recursos estáticos
+    ├── 📁 css/                     # Estilos CSS
+    └── 📁 js/                      # JavaScript para la interactividad
 ```
 
-### mejoras
-- dividir las responsabilidades de los componentes
-- mejorar los mensajes de feedback a los usuarios
+### b. Diagrama de componentes
+
+Embed del diagrama de componentes para ilustrar flujos de datos y comunicación entre módulos.
+
+![Diagrama de Componentes](docs/diagrama-componentes.png)
+
+
+## 6. Metodología de desarrollo
+
+Se utilizó una metodología ágil adaptada (mini-sprints semanales) con GitHub Flow:
+
+* Rama `main` para versiones estables.
+* Ramas de develop y Pull Requests revisados antes de merge.
+* Revisiones de código y pruebas unitarias con xUnit/Moq. (pendiente)
+
+## 7. Planificación: Gantt inicial vs. final
+
+* **Gantt inicial**: planificación basada en estimaciones de tiempo por fase.
+* **Gantt final**: reflejó ajustes, aumentando el desarrollo backend en 2 h y despliegue en 4 h.
+
+![Gantt Inicial 1](docs/grant_inicial_1.png)
+![Gantt Inicial 2](docs/grant_inicial_2.png)
+![Gantt Final](docs/gantt-final.png)
+
+**Análisis de desviaciones**:
+
+* +2 h en Backend debido a integración de JWT y manejo de migraciones complejas.
+* +4 h en aws debido a configuraciones y grupos de seguridad.
+
+## 8. Clockify del desarrollo
+
+### a. Tiempo invertido por componente
+
+![Clockify: Tiempo por Componente](docs/clockify_01.png)
+
+![Clockify: Tiempo por Componente 2](docs/clockify_02.png)
+
+### b. Análisis del tiempo invertido
+
+El mayor esfuerzo se destinó a:
+
+* **Backend API** (38%): configuración de autenticación y migraciones.
+* **Frontend Admin** (34%): integración de Vue y validaciones del lado cliente.
+* **Adaptación Portfolio** (8%): refactor para consumo dinámico.
+
+## 9. Presupuesto de la app
+
+| Fase                              | Horas | Tarifa (€ /h) | Coste Mano de Obra (€) | Software Amortizado (€) |
+| --------------------------------- | ----- | ------------- | ---------------------- | ----------------------- |
+| Análisis y Planificación          | 10    | 25            | 250                    | 5                       |
+| Diseño                            | 8     | 25            | 200                    | 5                       |
+| Desarrollo Backend                | 18    | 25            | 450                    | 10                      |
+| Desarrollo Frontend (Panel Admin) | 16    | 25            | 400                    | 10                      |
+| Adaptación Portfolio              | 6     | 25            | 150                    | 5                       |
+| Documentación                     | 3     | 25            | 75                     | 2                       |
+| Despliegue                        | 2     | 25            | 50                     | 3                       |
+| **Total**                         | 63    | —             | **1575**               | **40**                  |
+
+## 10. Conclusiones
+
+### a. Principales dificultades
+
+* Configuración inicial de Docker y AWS.
+* Implementación de JWT y flujo de autenticación.
+* Restricción de tiempo (60 h) para un MVP completo.
+
+### b. Posibles mejoras
+
+* Sistema de caché y optimización de imágenes.
+* Búsqueda y filtrado avanzado en el panel.
+* Internacionalización (i18n) del contenido.
+* Integración de CI/CD completa con tests automáticos.
+
