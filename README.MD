@@ -1,4 +1,3 @@
-
 # Sistema de Gestión de Contenido para Portfolio Personal
 
 ## 1. Motivación (breve)
@@ -133,4 +132,3 @@ El mayor esfuerzo se destinó a:
 * Búsqueda y filtrado avanzado en el panel.
 * Internacionalización (i18n) del contenido.
 * Integración de CI/CD completa con tests automáticos.
-
