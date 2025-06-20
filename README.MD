@@ -78,11 +78,14 @@ Se utilizó una metodología ágil adaptada (mini-sprints semanales) con GitHub 
 ## 7. Planificación: Gantt inicial vs. final
 
 * **Gantt inicial**: planificación basada en estimaciones de tiempo por fase.
-* **Gantt final**: reflejó ajustes, aumentando el desarrollo backend en 2 h y despliegue en 4 h.
+
 
 ![Gantt Inicial 1](docs/grant_inicial_1.png)
 ![Gantt Inicial 2](docs/grant_inicial_2.png)
-![Gantt Final](docs/gantt-final.png)
+
+* **Gantt final**: reflejó ajustes, aumentando el desarrollo backend en 2 h y despliegue en 4 h.
+![Gantt Final 1](docs/gantt_1.png)
+![Gantt Final 2](docs/gantt_2.png)
 
 **Análisis de desviaciones**:
 
@@ -111,12 +114,12 @@ El mayor esfuerzo se destinó a:
 | --------------------------------- | ----- | ------------- | ---------------------- | ----------------------- |
 | Análisis y Planificación          | 10    | 25            | 250                    | 5                       |
 | Diseño                            | 8     | 25            | 200                    | 5                       |
-| Desarrollo Backend                | 18    | 25            | 450                    | 10                      |
+| Desarrollo Backend                | 20    | 25            | 500                    | 10                      |
 | Desarrollo Frontend (Panel Admin) | 16    | 25            | 400                    | 10                      |
 | Adaptación Portfolio              | 6     | 25            | 150                    | 5                       |
 | Documentación                     | 3     | 25            | 75                     | 2                       |
-| Despliegue                        | 2     | 25            | 50                     | 3                       |
-| **Total**                         | 63    | —             | **1575**               | **40**                  |
+| Despliegue                        | 6     | 25            | 150                     | 3                       |
+| **Total**                         | 69    | —             | **1725**               | **40**                  |
 
 ## 10. Conclusiones
 
